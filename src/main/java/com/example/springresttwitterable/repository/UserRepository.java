@@ -3,9 +3,7 @@ package com.example.springresttwitterable.repository;
 import com.example.springresttwitterable.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    User findByUsername(String userName);
-
-    User findByActivationCode(String code);
+    User findByName(String userName);
 }

@@ -11,5 +11,5 @@ services:
             - /srv/docker/postgresql:/var/lib/postgresql
         environment:
             - POSTGRES_PASSWORD=root
-            - POSTGRES_DB=twittarablespringboot
-            - POSTGRES_USER=twittarable
+            - POSTGRES_DB=magic_network
+            - POSTGRES_USER=magic_network

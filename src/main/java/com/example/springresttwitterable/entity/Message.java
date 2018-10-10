@@ -83,7 +83,7 @@ public class Message {
     }
 
     public String getAuthorName() {
-        return null != this.author ? this.author.getUsername() : "No Author";
+        return null != this.author ? this.author.getName() : "No Author";
     }
 
     public boolean isEdited() {

@@ -91,7 +91,7 @@ public class UserController {
     @GetMapping("profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user) {
         
-        model.addAttribute("username", user.getUsername());
+        model.addAttribute("username", user.getName());
         model.addAttribute("email", user.getEmail());
         return "profile";
     }
@@ -103,16 +103,16 @@ public class UserController {
             @ApiResponse(code = 403, message = "Forbidden")
         }
     )
-    @PostMapping("profile")
-    public String updateProfile(
-            @AuthenticationPrincipal User user,
-            @RequestParam String password,
-            @RequestParam String email
-    ) {
-        
-        userService.updateProfile(user, password, email);
-        return "redirect:/user/profile";
-    }
+//    @PostMapping("profile")
+//    public String updateProfile(
+//            @AuthenticationPrincipal User user,
+//            @RequestParam String password,
+//            @RequestParam String email
+//    ) {
+//        
+//        userService.updateProfile(user, password, email);
+//        return "redirect:/user/profile";
+//    }
 
     @GetMapping("/subscribe/{user}")
     public String subscribe(

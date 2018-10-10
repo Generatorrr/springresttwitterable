@@ -4,8 +4,8 @@
             <label class="col-sm-2 col-form-label"> User Name : </label>
             <div class="col-sm-6">
                 <input class="form-control ${(usernameError??)?string('is-invalid', '')}"
-                       type="text" name="username" placeholder="User Name"
-                       value="<#if user??>${user.username}</#if>" />
+                       type="text" name="name" placeholder="User Name"
+                       value="<#if user??>${user.name}</#if>" />
             <#if usernameError??>
                 <div class="invalid-feedback">
                     ${usernameError}

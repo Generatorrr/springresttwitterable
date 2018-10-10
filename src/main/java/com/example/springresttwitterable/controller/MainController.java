@@ -42,15 +42,15 @@ public class MainController {
         this.messageRepository = messageRepository;
     }
 
-    @ApiOperation(value = "Get greeting page", response = HTMLDocument.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully return needed page")
-        }
-    )
-    @GetMapping("/")
-    public String greeting() {
-        return "greeting";
-    }
+//    @ApiOperation(value = "Get greeting page", response = HTMLDocument.class)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "Successfully return needed page")
+//        }
+//    )
+//    @GetMapping("/")
+//    public String greeting() {
+//        return "greeting";
+//    }
 
     @ApiOperation(value = "Main page", response = HTMLDocument.class)
     @ApiResponses(value = {

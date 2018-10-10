@@ -5,22 +5,23 @@ create table message (
   filename varchar(255),
   tag varchar(255),
   text varchar(2048) not null,
-  user_id int8,
+  user_id varchar(255),
   primary key (id)
 );
 
 create table account_role (
-  account_id int8 not null,
+  account_id varchar(255) not null,
   roles varchar(255)
 );
 
 create table account (
-  id int8 not null,
-  activation_code varchar(255),
-  active boolean not null,
+  id varchar(255) not null,
+  name varchar(255) not null,
+  userpic varchar(255),
+  gender varchar(255),
+  locale varchar(255),
   email varchar(255) not null,
-  password varchar(255) not null,
-  username varchar(255) not null,
+  last_visit varchar(255) not null,
   primary key (id)
 );
 

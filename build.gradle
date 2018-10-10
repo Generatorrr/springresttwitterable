@@ -9,7 +9,9 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
-
+plugins {
+	id 'net.ltgt.apt' version '0.10'
+}
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -35,7 +37,8 @@ dependencies {
 	compile('org.springframework.session:spring-session-jdbc')
 	compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
 	compile('org.postgresql:postgresql')
-	compile('org.projectlombok:lombok')
+	compile('org.projectlombok:lombok:1.18.2')
+		apt('org.projectlombok:lombok:1.18.2')
 	compile('org.springframework.boot:spring-boot-starter-mail:1.2.0.RELEASE')
 	compile('org.flywaydb:flyway-core')
 	compile('io.springfox:springfox-swagger2:2.8.0')

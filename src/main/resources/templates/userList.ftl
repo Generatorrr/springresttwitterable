@@ -13,7 +13,7 @@ List of users
     <tbody>
     <#list users as user>
         <tr>
-            <td>${user.username}</td>
+            <td>${user.name}</td>
             <td>
                 <#list user.roles as role>
                     ${role}<#sep>,

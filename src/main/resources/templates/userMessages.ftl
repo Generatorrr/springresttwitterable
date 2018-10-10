@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-    <h3>${userChannel.username}</h3>
+    <h3>${userChannel.name}</h3>
     <#if !isCurrentUser>
         <#if isSubscriber>
             <a class="btn btn-info" href="/user/unsubscribe/${userChannel.id}/list">Unsubscribe</a>

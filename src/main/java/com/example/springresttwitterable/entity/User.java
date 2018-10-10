@@ -11,31 +11,39 @@ import javax.validation.constraints.NotBlank;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "account")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class User implements UserDetails {
+@Data
+public class User {
 
     @Id
-    //GenerationType.AUTO by default
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    // We don't need generate this value cause we are going to use Ids from Google
+    private String id;
 
     @NotBlank(message = "Username can't be empty")
-    private String username;
-
-    @NotBlank(message = "Password can't be empty")
-    private String password;
+    private String name;
     
-    private boolean active;
+    @Column(name = "userpic")
+    private String userpic;
     
-    @Email(message = "Email is not correct")
-    @NotBlank(message = "Email can't be empty")
+    @Column(name = "gender")
+    private String gender;
+    
+    @Column(name = "locale")
+    private String locale;
+    
+    @Column(name = "last_visit")
+    private String lastVisit;
+    
+    @Column(name = "email")
     private String email;
-    private String activationCode;
 
     // FetchType.LAZY by default
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -62,73 +70,64 @@ public class User implements UserDetails {
     )
     private Set<User> subscribers = new HashSet<>();
 
-    public Long getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id)
+    {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName()
+    {
+        return name;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public String getUserpic()
+    {
+        return userpic;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public void setUserpic(String userpic)
+    {
+        this.userpic = userpic;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return isActive();
+    public String getGender()
+    {
+        return gender;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setGender(String gender)
+    {
+        this.gender = gender;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+    public String getLocale()
+    {
+        return locale;
     }
 
-    public String getPassword() {
-        return password;
+    public void setLocale(String locale)
+    {
+        this.locale = locale;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getLastVisit()
+    {
+        return lastVisit;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isAdmin() {
-        return roles.contains(Role.ADMIN);
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setLastVisit(String lastVisit)
+    {
+        this.lastVisit = lastVisit;
     }
 
     public String getEmail()
@@ -141,57 +140,85 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getActivationCode()
+    public Set<Role> getRoles()
     {
-        return activationCode;
+        return roles;
     }
 
-    public void setActivationCode(String activationCode)
+    public void setRoles(Set<Role> roles)
     {
-        this.activationCode = activationCode;
+        this.roles = roles;
     }
 
-    public Set<Message> getMessages() {
+    public Set<Message> getMessages()
+    {
         return messages;
     }
 
-    public void setMessages(Set<Message> messages) {
+    public void setMessages(Set<Message> messages)
+    {
         this.messages = messages;
     }
 
-    public Set<User> getSubscribtions() {
+    public Set<User> getSubscribtions()
+    {
         return subscribtions;
     }
 
-    public void setSubscribtions(Set<User> subscribtions) {
+    public void setSubscribtions(Set<User> subscribtions)
+    {
         this.subscribtions = subscribtions;
     }
 
-    public Set<User> getSubscribers() {
+    public Set<User> getSubscribers()
+    {
         return subscribers;
     }
 
-    public void setSubscribers(Set<User> subscribers) {
+    public void setSubscribers(Set<User> subscribers)
+    {
         this.subscribers = subscribers;
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if ( !(other instanceof User) ) return false;
-
-        final User user = (User) other;
-
-        if ( !user.getEmail().equals( getEmail() ) ) return false;
-
-        return true;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(lastVisit, user.lastVisit) &&
+                Objects.equals(email, user.email);
     }
 
     @Override
-    public int hashCode() {
-        int result;
-        result = getPassword().hashCode();
-        result = 30 * result * getEmail().length();
-        return result;
+    public int hashCode()
+    {
+
+        return Objects.hash(id, lastVisit, email);
+    }
+
+    @Override
+    public String toString()
+    {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", userpic='" + userpic + '\'' +
+                ", gender='" + gender + '\'' +
+                ", locale='" + locale + '\'' +
+                ", lastVisit='" + lastVisit + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", messages=" + messages +
+                ", subscribtions=" + subscribtions +
+                ", subscribers=" + subscribers +
+                '}';
     }
 }

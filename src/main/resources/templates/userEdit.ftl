@@ -3,7 +3,7 @@
 <@c.page>
 
 <form action="/user" method="post">
-    <input type="text" name="username" value="${user.username}" />
+    <input type="text" name="name" value="${user.name}" />
     <#list roles as role>
         <div>
             <label>
