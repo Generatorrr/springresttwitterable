@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Sso
@@ -24,26 +26,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
             
             "/",
-            "/registration", 
-            "/static/**",
-            "/activation/*"
+            "/login", 
+            "/js/**",
+            "/error**"
     };
-    
-    @Autowired
-    private UserService userService;
 
     @Bean
     public PrincipalExtractor principalExtractor(UserRepository userRepository) {
         return map -> {
-            return new User();
+            String id = (String) map.get("sub");
+            User user = userRepository.findById(id).orElseGet(() -> {
+                User newUser = new User();
+                
+                newUser.setId(id);
+                newUser.setName((String) map.get("name"));
+                newUser.setEmail((String) map.get("email"));
+                newUser.setGender((String) map.get("gender"));
+                newUser.setLocale((String) map.get("locale"));
+                newUser.setUserpic((String) map.get("picture"));
+                
+                return newUser;
+            });
+            
+            user.setLastVisit(LocalDateTime.now());
+            
+            return userRepository.save(user);
         };
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .antMatcher("/**")
                 .authorizeRequests()
-                    .mvcMatchers("/").permitAll()
+                    .antMatchers(AUTH_WHITELIST).permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .csrf().disable();

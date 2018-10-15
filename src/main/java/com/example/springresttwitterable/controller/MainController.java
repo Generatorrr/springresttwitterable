@@ -12,11 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -35,6 +38,9 @@ public class MainController {
 
     @Value("${upload.path}")
     private String uploadPath;
+    
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     private final MessageRepository messageRepository;
 
@@ -42,15 +48,27 @@ public class MainController {
         this.messageRepository = messageRepository;
     }
 
-//    @ApiOperation(value = "Get greeting page", response = HTMLDocument.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully return needed page")
-//        }
-//    )
-//    @GetMapping("/")
-//    public String greeting() {
-//        return "greeting";
-//    }
+    @ApiOperation(value = "Get greeting page", response = HTMLDocument.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully return needed page")
+        }
+    )
+    @GetMapping
+    @RequestMapping("/")
+    public String greeting(
+            Model model,
+            @AuthenticationPrincipal User user
+    ) {
+
+        HashMap<Object, Object> data = new HashMap<>();
+        data.put("profile", user);
+        data.put("messages", null);
+        
+        model.addAttribute("frontendData", data);
+        model.addAttribute("isDevMode", "dev".equals(profile));
+
+        return "index";
+    }
 
     @ApiOperation(value = "Main page", response = HTMLDocument.class)
     @ApiResponses(value = {

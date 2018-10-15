@@ -2,6 +2,7 @@ package com.example.springresttwitterable.entity;
 
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +10,10 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,8 +25,11 @@ import lombok.Data;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Data
-public class User {
+public class User implements Serializable
+{
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     // We don't need generate this value cause we are going to use Ids from Google
     private String id;
@@ -40,7 +47,7 @@ public class User {
     private String locale;
     
     @Column(name = "last_visit")
-    private String lastVisit;
+    private LocalDateTime lastVisit;
     
     @Column(name = "email")
     private String email;
@@ -54,7 +61,7 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Message> messages;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "account_subscriptions",
             joinColumns = { @JoinColumn(name = "subscriber_id") },
@@ -62,7 +69,7 @@ public class User {
     )
     private Set<User> subscribtions = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "account_subscriptions",
             joinColumns = { @JoinColumn(name = "channel_id") },
@@ -120,12 +127,12 @@ public class User {
         this.locale = locale;
     }
 
-    public String getLastVisit()
+    public LocalDateTime getLastVisit()
     {
         return lastVisit;
     }
 
-    public void setLastVisit(String lastVisit)
+    public void setLastVisit(LocalDateTime lastVisit)
     {
         this.lastVisit = lastVisit;
     }
@@ -180,6 +187,10 @@ public class User {
         this.subscribers = subscribers;
     }
 
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -217,8 +228,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", roles=" + roles +
                 ", messages=" + messages +
-                ", subscribtions=" + subscribtions +
-                ", subscribers=" + subscribers +
                 '}';
     }
 }

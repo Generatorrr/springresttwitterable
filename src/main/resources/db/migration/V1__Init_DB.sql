@@ -21,7 +21,7 @@ create table account (
   gender varchar(255),
   locale varchar(255),
   email varchar(255) not null,
-  last_visit varchar(255) not null,
+  last_visit timestamp not null,
   primary key (id)
 );
 
