@@ -2,6 +2,7 @@ package com.example.springresttwitterable.service;
 
 import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
+import com.example.springresttwitterable.entity.dto.UserUpdateDTO;
 import com.example.springresttwitterable.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -58,32 +59,12 @@ public class UserService {
         
     }
 
-//    public void updateProfile(User user, String password, String email)
-//    {
-//        
-//        String userCurrentEmail = user.getEmail();
-//        
-//        boolean isEmailChanged = (email != null && !email.equals(userCurrentEmail)) 
-//                || (userCurrentEmail != null && !userCurrentEmail.equals(email));
-//        
-//        if (isEmailChanged) {
-//            user.setEmail(email);
-//            
-//            if (!StringUtils.isEmpty(email)) {
-//                user.setActivationCode(UUID.randomUUID().toString());
-//            }
-//        }
-//        
-//        if (!StringUtils.isEmpty(password)) {
-//            user.setPassword(password);
-//        }
-//        
-//        userRepository.save(user);
-//
-//        if (isEmailChanged) {
-//            sendEmail(user);
-//        }
-//    }
+    public void updateProfile(User user, UserUpdateDTO userToUpdate)
+    {
+        user.setEmail(userToUpdate.getEmail());
+        user.setName(userToUpdate.getName());
+        userRepository.save(user);
+    }
 
     public void subscribe(User currentUser, User user) {
 

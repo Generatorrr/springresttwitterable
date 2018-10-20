@@ -1,5 +1,6 @@
 package com.example.springresttwitterable.config;
 
+import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.repository.UserRepository;
 import com.example.springresttwitterable.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -44,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newUser.setGender((String) map.get("gender"));
                 newUser.setLocale((String) map.get("locale"));
                 newUser.setUserpic((String) map.get("picture"));
-                
+                newUser.setRoles(Collections.singleton(Role.USER));
+
                 return newUser;
             });
             

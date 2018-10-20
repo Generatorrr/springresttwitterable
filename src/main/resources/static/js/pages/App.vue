@@ -1,25 +1,33 @@
 <template>
   <div>
-    <h3>Hello, friend!!!</h3>
-    <div>
-      <p>
-        This application is my first experience with Spring framework!!!
-      </p>
-      <div v-if="!profile">It is necessary to authorize with <a href="/login">Google</a></div>
-      <div v-else>
-        <div>{{profile.name}}&nbsp;<a href="/logout">Log Out</a></div>
-      </div>
-
+    <nav-bar :profile="profile"></nav-bar>
+    <div class="container mt-5">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
+  import NavBar from 'components/navbar/NavBar.vue'
+  import GreetingsBlock from 'components/greetings/Greetings.vue'
   export default {
-      data: () => ({
-          messages: frontendData.messages,
-          profile: frontendData.profile
-      })
+      components: {
+        NavBar, GreetingsBlock
+      },
+      data: () => {
+          return {
+              messages: frontendData.messages,
+              profile: frontendData.profile
+          }
+      },
+      mounted() {
+          this.commitProfile();
+      },
+      methods: {
+          commitProfile() {
+              this.$store.commit('setProfile', frontendData.profile);
+          }
+      }
   }
 </script>
 
