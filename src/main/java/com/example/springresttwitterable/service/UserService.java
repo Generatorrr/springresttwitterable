@@ -2,23 +2,16 @@ package com.example.springresttwitterable.service;
 
 import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
-import com.example.springresttwitterable.entity.dto.UserUpdateDTO;
+import com.example.springresttwitterable.entity.dto.UserDTO;
 import com.example.springresttwitterable.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +52,7 @@ public class UserService {
         
     }
 
-    public void updateProfile(User user, UserUpdateDTO userToUpdate)
+    public void updateProfile(User user, UserDTO userToUpdate)
     {
         user.setEmail(userToUpdate.getEmail());
         user.setName(userToUpdate.getName());

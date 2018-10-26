@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import App from 'pages/App.vue'
 import Greetings from 'components/greetings/Greetings.vue'
 import Profile from 'components/profile/Profile.vue'
+import Messages from 'components/messages/Messages.vue'
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -11,6 +12,7 @@ Vue.use(Vuex);
 const routes = [
     { path: '/', component: Greetings, props: true },
     { path: '/user/profile', component: Profile, props: true },
+    { path: '/message', component: Messages, props: true },
 ];
 
 const router = new VueRouter({
@@ -20,7 +22,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         count: 0,
-        profile: null
+        profile: null,
+        messages: [],
     },
     mutations: {
         increment (state) {
@@ -28,12 +31,15 @@ const store = new Vuex.Store({
         },
         setProfile(state, payload) {
             state.profile = payload;
-        }
+        },
+        setMessages(state, payload) {
+            debugger;
+            state.messages = payload;
+        },
     },
     getters: {
-        getProfile: state => {
-            return state.profile;
-        }
+        getProfile: state => state.profile,
+        getMessages: state => state.messages,
     }
 });
 

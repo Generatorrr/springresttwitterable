@@ -14,7 +14,7 @@
                     <a class="nav-link" href="/user">User List</a>
                 </li>
                 <li v-if="profile" class="nav-item">
-                    <a class="nav-link" href="/main">Messages</a>
+                    <router-link class="nav-link" to="/message">Messages</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
                     <router-link class="nav-link" to="/user/profile">Profile</router-link>

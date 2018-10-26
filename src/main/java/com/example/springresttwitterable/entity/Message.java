@@ -1,8 +1,13 @@
 package com.example.springresttwitterable.entity;
 
+import com.example.springresttwitterable.entity.dto.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Cache;
 import org.hibernate.validator.constraints.Length;
+
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,25 +15,34 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-public class Message {
+public class Message implements Serializable
+{
+
+    private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private Long id;
 
     @NotBlank(message = "Please, fill the message")
     @Length(max = 2048, message = "Message too long (more than 2 kB)")
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private String text;
     
     @Length(max = 255, message = "Tag is too long")
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private User author;
 
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private String filename;
 
+    @JsonView({Views.MessageDTO.class, Views.InitialFEData.class})
     private boolean edited;
 
     public Message() {

@@ -1,18 +1,18 @@
 package com.example.springresttwitterable.controller;
 
-import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
-import com.example.springresttwitterable.entity.dto.UserUpdateDTO;
+import com.example.springresttwitterable.entity.dto.UserDTO;
 import com.example.springresttwitterable.service.UserService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.text.html.HTMLDocument;
 
@@ -108,7 +108,7 @@ public class UserController {
     @PostMapping("profile")
     public ResponseEntity updateProfile(
             @AuthenticationPrincipal User user,
-            @RequestBody UserUpdateDTO userToUpdate
+            @RequestBody UserDTO userToUpdate
     ) {
         userService.updateProfile(user, userToUpdate);
         return ResponseEntity.ok().build();

@@ -13,9 +13,16 @@ plugins {
 	id 'net.ltgt.apt' version '0.10'
 }
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+
+idea {
+	module {
+		outputDir file('build/classes/main')
+		testOutputDir file('build/classes/test')
+	}
+}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -49,5 +56,7 @@ dependencies {
 	compile('com.sun.xml.bind:jaxb-core:2.3.0')
 	compile('com.sun.xml.bind:jaxb-impl:2.3.0')
 	compile('org.springframework.security:spring-security-test')
+	compile('org.mapstruct:mapstruct-jdk8:1.2.0.Final')
+		apt('org.mapstruct:mapstruct-processor:1.2.0.Final')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

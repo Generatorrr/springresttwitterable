@@ -26,6 +26,7 @@
       methods: {
           commitProfile() {
               this.$store.commit('setProfile', frontendData.profile);
+              this.$store.commit('setMessages', frontendData.messages);
           }
       }
   }

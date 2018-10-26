@@ -4,13 +4,13 @@
             <div class="form-group">
                 <label class="col-sm-2 col-form-label"> Name: </label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="text" name="name" :placeholder="getProfile.name" v-model="updatedName" />
+                    <input class="form-control" type="text" name="name" :placeholder="profile.name" v-model="updatedName" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-form-label"> Email: </label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="email" name="email" :placeholder="getProfile.email" v-model="updatedEmail" />
+                    <input class="form-control" type="email" name="email" :placeholder="profile.email" v-model="updatedEmail" />
                 </div>
             </div>
             <!--<input type="hidden" name="_csrf" value="${_csrf.token}" />-->
@@ -19,13 +19,12 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
     import axios from 'axios'
     export default {
         computed: {
-            ...mapGetters([
-                'getProfile'
-            ])
+          profile() {
+            return this.$store.getters.getProfile;
+          }
         },
         data() {
           return {
@@ -46,7 +45,7 @@
                     })
                     .then(() => {
                         this.commitUpdatedProfile({
-                            ...this.getProfile,
+                            ...this.profile,
                             name: this.updatedName,
                             email: this.updatedEmail
                         });
