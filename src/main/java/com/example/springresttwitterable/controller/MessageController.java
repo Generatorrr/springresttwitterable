@@ -7,7 +7,9 @@ package com.example.springresttwitterable.controller;
 
 import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
-import com.example.springresttwitterable.entity.dto.MessageDTO;
+import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
+import com.example.springresttwitterable.entity.dto.message.MessageDTO;
+import com.example.springresttwitterable.entity.mapper.MessageMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.swing.text.html.HTMLDocument;
@@ -55,12 +58,14 @@ public class MessageController
     private String uploadPath;
 
     private final MessageRepository messageRepository;
+    
+    private final MessageMapper messageMapper;
 
-    public MessageController(MessageRepository messageRepository)
+    public MessageController(MessageRepository messageRepository, MessageMapper messageMapper)
     {
         this.messageRepository = messageRepository;
+        this.messageMapper = messageMapper;
     }
-    
 
     @ApiOperation(value = "Get messages", response = HTMLDocument.class)
     @ApiResponses(value = {
@@ -70,19 +75,18 @@ public class MessageController
     )
     @GetMapping
     @ResponseBody
-    public ResponseEntity<Iterable<Message>> main(
-            @AuthenticationPrincipal User user,
+    public ResponseEntity<List<ListMessageDTO>> main(
             @RequestParam(required = false, defaultValue = "") String filter
     ) {
-        
-        Iterable<Message> toResponse;
+
+        List<Message> toResponse;
         if (null != filter && !filter.isEmpty()) {
             toResponse = messageRepository.findByTag(filter);
         } else {
-            toResponse = messageRepository.findAll();
+            toResponse = (List<Message>) messageRepository.findAll();
         }
         
-        return new ResponseEntity<>(toResponse, HttpStatus.OK);
+        return new ResponseEntity<>(messageMapper.convert(toResponse), HttpStatus.OK);
     }
 
     @PostMapping

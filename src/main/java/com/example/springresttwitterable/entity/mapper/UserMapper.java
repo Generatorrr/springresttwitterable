@@ -1,9 +1,7 @@
 package com.example.springresttwitterable.entity.mapper;
 
 import com.example.springresttwitterable.entity.User;
-import com.example.springresttwitterable.entity.dto.UserDTO;
-import com.example.springresttwitterable.entity.dto.Views;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.example.springresttwitterable.entity.dto.user.InitialUserDTO;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -20,5 +18,5 @@ import org.mapstruct.ReportingPolicy;
 public interface UserMapper
 {
     
-    UserDTO convert(User user);
+    InitialUserDTO convert(User user);
 }

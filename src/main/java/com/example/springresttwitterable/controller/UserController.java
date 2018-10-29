@@ -1,7 +1,7 @@
 package com.example.springresttwitterable.controller;
 
 import com.example.springresttwitterable.entity.User;
-import com.example.springresttwitterable.entity.dto.UserDTO;
+import com.example.springresttwitterable.entity.dto.user.UserDTO;
 import com.example.springresttwitterable.service.UserService;
 
 import org.springframework.http.ResponseEntity;

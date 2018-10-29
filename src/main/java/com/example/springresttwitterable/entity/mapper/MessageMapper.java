@@ -1,9 +1,8 @@
 package com.example.springresttwitterable.entity.mapper;
 
 import com.example.springresttwitterable.entity.Message;
-import com.example.springresttwitterable.entity.dto.MessageDTO;
-import com.example.springresttwitterable.entity.dto.Views;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
+import com.example.springresttwitterable.entity.dto.message.MessageDTO;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,9 +21,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {UserMapper.class})
 public interface MessageMapper
 {
-    @Mapping(target = "file", ignore = true)
-    @JsonView({ Views.UserInitialFEDTO.class, Views.MessageForListDTO.class })
-    MessageDTO convert(Message message);
     
-    List<MessageDTO> convert(List<Message> messages);
+    ListMessageDTO convert(Message message);
+    
+    List<ListMessageDTO> convert(List<Message> messages);
 }

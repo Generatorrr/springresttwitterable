@@ -1,12 +1,8 @@
-/*
- * Developed for Epson Europe BV by Softeq Development Corporation.
- * http://www.softeq.com
- */
-
 package com.example.springresttwitterable.entity.dto;
 
+import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
+import com.example.springresttwitterable.entity.dto.user.InitialUserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,10 +17,9 @@ import lombok.Data;
  */
 
 @Data
-@JsonView(Views.InitialFEData.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InitialFrontendDataDTO implements Serializable
 {
-    private UserDTO profile;
-    private List<MessageDTO> messages;
+    private InitialUserDTO profile;
+    private List<ListMessageDTO> messages;
 }

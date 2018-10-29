@@ -3,14 +3,10 @@ package com.example.springresttwitterable.controller;
 import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.InitialFrontendDataDTO;
-import com.example.springresttwitterable.entity.dto.Views;
 import com.example.springresttwitterable.entity.mapper.MessageMapper;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.MapperFeature;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -64,14 +58,11 @@ public class MainController {
     public String greeting(
             Model model,
             @AuthenticationPrincipal User user
-    ) throws IOException
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
+    ) {
+        
         InitialFrontendDataDTO initialFrontendDataDTO = new InitialFrontendDataDTO();
         initialFrontendDataDTO.setMessages(messageMapper.convert((List<Message>) messageRepository.findAll()));
         initialFrontendDataDTO.setProfile(userMapper.convert(user));
-        
-        String string = objectMapper.writerWithView(Views.UserInitialFEDTO.class).writeValueAsString(initialFrontendDataDTO.getMessages());
         
         model.addAttribute("frontendData", initialFrontendDataDTO);
         model.addAttribute("isDevMode", "dev".equals(profile));

@@ -33,7 +33,6 @@ const store = new Vuex.Store({
             state.profile = payload;
         },
         setMessages(state, payload) {
-            debugger;
             state.messages = payload;
         },
     },

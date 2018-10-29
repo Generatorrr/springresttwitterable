@@ -1,50 +1,56 @@
-package com.example.springresttwitterable.entity.dto;
+/*
+ * Developed for Epson Europe BV by Softeq Development Corporation.
+ * http://www.softeq.com
+ */
+
+package com.example.springresttwitterable.entity.dto.user;
 
 import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
-
-import lombok.Data;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import lombok.Data;
+
+/**
+ * TODO: write a brief summary fragment.
+ * <p>
+ * TODO: write a detailed description.
+ * <p>
+ * Created on 10/29/18.
+ * <p>
+ * @author Vlad Martinkov
+ */
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO implements Serializable
+public class InitialUserDTO implements Serializable
 {
-    
-    @JsonView(Views.MessageAuthorDTO.class)
+
     private String id;
 
     @NotNull
     @NotEmpty
-    @JsonView(Views.UserDTO.class)
     private String name;
 
     @NotNull
     @NotEmpty
-    @JsonView(Views.UserDTO.class)
     private String email;
 
-    @JsonView(Views.UserInitialFEDTO.class)
     private String userpic;
 
-    @JsonView(Views.UserInitialFEDTO.class)
     private String gender;
 
-    @JsonView(Views.UserInitialFEDTO.class)
     private Set<Role> roles;
 
     private String locale;
+
     private LocalDateTime lastVisit;
-    Set<Message> messages;
-    private Set<User> subscribtions;
-    private Set<User> subscribers;
 }

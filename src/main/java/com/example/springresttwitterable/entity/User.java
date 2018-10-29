@@ -36,19 +36,15 @@ public class User implements Serializable
     
     @Id
     // We don't need generate this value cause we are going to use Ids from Google
-    @JsonView({Views.MessageAuthorDTO.class, Views.InitialFEData.class})
     private String id;
 
     @NotBlank(message = "Username can't be empty")
-    @JsonView({Views.UserDTO.class, Views.InitialFEData.class})
     private String name;
     
     @Column(name = "userpic")
-    @JsonView({Views.UserInitialFEDTO.class, Views.InitialFEData.class})
     private String userpic;
     
     @Column(name = "gender")
-    @JsonView({Views.UserInitialFEDTO.class, Views.InitialFEData.class})
     private String gender;
     
     @Column(name = "locale")
@@ -58,18 +54,15 @@ public class User implements Serializable
     private LocalDateTime lastVisit;
     
     @Column(name = "email")
-    @JsonView(Views.UserDTO.class)
     private String email;
 
     // FetchType.LAZY by default
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"))
     @Enumerated(EnumType.STRING)
-    @JsonView({Views.UserInitialFEDTO.class, Views.InitialFEData.class})
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonView(Views.NotPassUserData.class)
     Set<Message> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -78,7 +71,6 @@ public class User implements Serializable
             joinColumns = { @JoinColumn(name = "subscriber_id") },
             inverseJoinColumns = { @JoinColumn(name = "channel_id") }
     )
-    @JsonView(Views.NotPassUserData.class)
     private Set<User> subscribtions = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -87,7 +79,6 @@ public class User implements Serializable
             joinColumns = { @JoinColumn(name = "channel_id") },
             inverseJoinColumns = { @JoinColumn(name = "subscriber_id") }
     )
-    @JsonView(Views.NotPassUserData.class)
     private Set<User> subscribers = new HashSet<>();
 
     public String getId()
@@ -240,7 +231,6 @@ public class User implements Serializable
                 ", lastVisit='" + lastVisit + '\'' +
                 ", email='" + email + '\'' +
                 ", roles=" + roles +
-                ", messages=" + messages +
                 '}';
     }
 }
