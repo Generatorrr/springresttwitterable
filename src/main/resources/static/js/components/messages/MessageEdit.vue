@@ -3,24 +3,25 @@
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
       Message Editor
     </a>
-    <div class="collapse" v-bind:class="{ show: message }" id="collapseExample">
+    <div class="collapse" v-bind:class="{ show: editingMessage && editingMessage.text }" id="collapseExample">
       <div class="form-group mt-3">
-        <form ref="messageForm" method="post" action="/message" enctype="multipart/form-data" >
+        <form enctype="multipart/form-data" >
           <div class="form-group">
-            <input class="form-control" v-bind:class="{ 'is-invalid': textError }"
-                   v-model="message && message.text" type="text" name="text" placeholder="Input your message" />
+            <input class="form-control" v-bind:class="{ 'is-invalid': textError }" ref="messageText"
+                    v-model="editingMessage && editingMessage.text" type="text" name="text" placeholder="Input your message" />
             <div v-if="textError" class="invalid-feedback">{{textError}}</div>
           </div>
           <div class="form-group">
-            <input class="form-control" v-bind:class="{ 'is-invalid': textError }" type="text" name="tag" placeholder="Input your tag"
-                   v-model="message && message.tag" />
+            <input class="form-control" v-bind:class="{ 'is-invalid': textError }" ref="messageTag"
+                   type="text" name="tag" placeholder="Input your tag"
+                   v-model="editingMessage && editingMessage.tag" />
             <div v-if="tagError" class="invalid-feedback">{{tagError}}</div>
           </div>
           <div class="custom-file">
-            <input v-on:change="message && message.file" id="customFile" type="file" name="file" />
+            <input id="customFile" type="file" name="file" ref="customFile" />
             <label for="customFile" class="custom-file-label">Choose file</label>
           </div>
-          <input type="hidden" name="id" :value="message && message.id" />
+          <input type="hidden" name="id" :value="editingMessage && editingMessage.id" ref="messageId" />
           <div class="form-group">
             <button class="btn btn-primary mt-3" v-on:click="postMessage">Save message</button>
           </div>
@@ -30,34 +31,42 @@
   </div>
 </template>
 
-<script>
-  import axios from 'axios'
-  
+<script>  
  export default {
-   // props: [ 'message' ],
+   computed: {
+     editingMessage() {
+       return this.$store.getters.getEditingMessage;
+     }
+   },
    data() {
      return {
        textError: null,
        tagError: null,
-       message: {
-         text: null,
-         tag: null,
-         file: null
-       }
      }
    },
    methods: {
      postMessage() {
        debugger;
-       axios
-         .post(location.origin + this.$route.path, this.message)
+       const formData = new FormData();
+       formData.append('text', this.$refs.messageText.value);
+       formData.append('tag', this.$refs.messageTag.value);
+       if (this.$refs.customFile.files[0]) {
+         formData.append('file', this.$refs.customFile.files[0]);
+       }
+       if (this.$refs.messageId.value) {
+         formData.append('id', this.$refs.messageId.value);
+       }
+       fetch(`${location.origin}/message`, {
+         method: this.$refs.messageId.value ? 'put' : 'post',
+         body: formData
+       })
          .then(() => {
            debugger;
          })
          .catch(err => {
            console.log(err);
          });
-     }
+     },
    }
  }
  

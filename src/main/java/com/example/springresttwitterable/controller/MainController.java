@@ -62,7 +62,7 @@ public class MainController {
         
         InitialFrontendDataDTO initialFrontendDataDTO = new InitialFrontendDataDTO();
         initialFrontendDataDTO.setMessages(messageMapper.convert((List<Message>) messageRepository.findAll()));
-        initialFrontendDataDTO.setProfile(userMapper.convert(user));
+        initialFrontendDataDTO.setProfile(userMapper.convertToInitialUserDTO(user));
         
         model.addAttribute("frontendData", initialFrontendDataDTO);
         model.addAttribute("isDevMode", "dev".equals(profile));

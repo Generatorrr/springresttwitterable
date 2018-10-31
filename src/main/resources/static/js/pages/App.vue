@@ -9,10 +9,10 @@
 
 <script>
   import NavBar from 'components/navbar/NavBar.vue'
-  import GreetingsBlock from 'components/greetings/Greetings.vue'
+  import Home from 'components/home/Home.vue'
   export default {
       components: {
-        NavBar, GreetingsBlock
+        NavBar, Home
       },
       data: () => {
           return {

@@ -17,13 +17,17 @@ public final class Views
     
     // User views
     public interface UserDTO {}
+    public interface FullUserDTO extends UserDTO {}
     public interface UserForUpdateDTO extends UserDTO {}
     public interface MessageAuthorDTO extends UserDTO {}
+    public interface UserChannelInfoDTO extends MessageAuthorDTO {}
     public interface UserInitialFEDTO extends MessageAuthorDTO {}
     
     public interface NotPassUserData {}
     
     public interface InitialFEData {}
+    
+    public interface ChannelDataDTO extends MessageAuthorDTO, MessageForListDTO {}
     
     
 }
