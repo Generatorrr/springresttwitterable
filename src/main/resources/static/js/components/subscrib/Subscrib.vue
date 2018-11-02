@@ -4,21 +4,22 @@
       <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
         <header class="modal-header" id="modalTitle">
           <slot name="header">
-            This is the default tile!
+            <h3 v-if="type && channel">{{channel.userChannel.name}}'s {{type}}</h3>
             <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
           </slot>
         </header>
         <section class="modal-body" id="modalDescription">
           <slot name="body">
-            I'm the default body!
+            <ul class="list-group" v-if="users">
+              <li class="list-group-item" v-for="user in users">
+                <div class="user-block-item">
+                  <img :src="`${user.userpic}`" alt="User's avatar" />
+                  <router-link :to="`/user-messages/${user.id}`">{{user.name}}</router-link>
+                </div>
+              </li>
+            </ul>
           </slot>
         </section>
-        <footer class="modal-footer">
-          <slot name="footer">
-            I'm the default footer!
-            <button type="button" class="btn-green" @click="close" aria-label="Close modal">Close me!</button>
-          </slot>
-        </footer>
       </div>
     </div>
   </transition>
@@ -26,7 +27,17 @@
 
 <script>
   export default {
-    props: ['channel, type, users'],
+    computed: {
+      type() {
+        return this.$store.getters.getType;
+      },
+      users() {
+        return this.$store.getters.getUsers;
+      },
+      channel() {
+        return this.$store.getters.getChannel;
+      }
+    },
     methods: {
       close() {
         this.$emit('close');
@@ -37,11 +48,10 @@
 
 <style lang="scss">
   .modal-backdrop {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: center;
@@ -93,5 +103,18 @@
     background: #4AAE9B;
     border: 1px solid #4AAE9B;
     border-radius: 2px;
+  }
+
+  .user-block-item {
+    display: flex;
+    flex-direction: row;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
+    a {
+      padding-left: 30px;
+    }
   }
 </style>

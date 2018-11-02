@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>Messages list:</div>
     <div class="card-columns">
       <div v-if="messages && messages.length">
         <div class="card my-3" v-for="message in messages">

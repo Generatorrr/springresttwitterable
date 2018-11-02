@@ -7,19 +7,19 @@
     </div>
     <div class="container my-3">
       <div class="row">
-        <div class="col">
+        <div class="col subscrib-link" v-on:click="showSubscribtionsModal">
           <div class="card">
             <div class="card-title">Subscriptions</div>
             <h3 class="card-text">
-              <a v-on:click="showSubscribtionsModal">{{channel.subscriptionsCount}}</a>
+              <a>{{channel.subscriptionsCount}}</a>
             </h3>
           </div>
         </div>
-        <div class="col">
+        <div class="col subscrib-link" v-on:click="showSubscribersModal">
           <div class="card">
             <div class="card-title">Subscribers</div>
             <h3 class="card-text">
-              <a v-on:click="showSubscribersModal">{{channel.subscribersCount}}</a>
+              <a>{{channel.subscribersCount}}</a>
             </h3>
           </div>
         </div>
@@ -27,7 +27,7 @@
       <message-edit v-if="channel.currentUser" class="mt-3"></message-edit>
       <message-list :messages="channel.messages" :profile="profile"></message-list>
     </div>
-    <subscrib-modal :channel="channel" :type="type" :users="users" v-show="isModalVisible" @close="closeModal"></subscrib-modal>
+    <subscrib-modal v-show="isModalVisible" @close="closeModal"></subscrib-modal>
   </div>
 </template>
 
@@ -47,20 +47,21 @@
         message: null,
         isModalVisible: false,
         type: null,
-        users: null,
       }
     },
     mounted() {
-      axios
-        .get(`${location.origin}/message/user/${this.$route.params.id}`)
-        .then(response => {
-          this.channel = response.data;
-        });
+      this.fetchChannel();
     },
     computed: {
       profile() {
         return this.$store.getters.getProfile;
       },
+    },
+    watch: {
+      '$route': function (to, from) {
+        this.fetchChannel()
+          .then(() => this.closeModal());
+      }
     },
     methods: {
       subscribeOrUnsubscribe() {
@@ -92,10 +93,11 @@
       },
       showSubscribersModal() {
         this.type = 'subscribers';
+        this.$store.commit('setType', 'subscribers');
         return axios
           .get(`${location.origin}/user/${this.type}/${this.channel.userChannel.id}/list`)
           .then(res => {
-            this.users = res.data;
+            this.$store.commit('setUsers', res.data);
           })
           .then(() => {
             this.isModalVisible = true;
@@ -103,11 +105,12 @@
           .catch(err => this.$toasted.error('Something went wrong!'));
       },
       showSubscribtionsModal() {
-        this.type = 'subscribtions';
+        this.type = 'subscriptions';
+        this.$store.commit('setType', 'subscriptions');
         return axios
           .get(`${location.origin}/user/${this.type}/${this.channel.userChannel.id}/list`)
           .then(res => {
-            this.users = res.data;
+            this.$store.commit('setUsers', res.data);
           })
           .then(() => {
             this.isModalVisible = true;
@@ -116,12 +119,26 @@
       },
       closeModal() {
         this.isModalVisible = false;
+      },
+      fetchChannel() {
+        return axios
+          .get(`${location.origin}/message/user/${this.$route.params.id}`)
+          .then(response => {
+            this.channel = response.data;
+            this.$store.commit('setChannel', response.data);
+          });
       }
     }
     
   }
 </script>
 
-<style>
-  
+<style lang="scss">
+  .subscrib-link {
+    cursor: pointer;
+    color: black;
+    :hover {
+      background-color: aquamarine;
+    }
+  }
 </style>

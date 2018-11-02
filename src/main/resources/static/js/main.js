@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Toasted from 'vue-toasted'
 
+import mainStore from './store/mainStore.js'
+import subscripModalStore from './store/subscripModalStore.js'
+
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
 import Profile from 'components/profile/Profile.vue'
@@ -23,30 +26,9 @@ const router = new VueRouter({
 });
 
 const store = new Vuex.Store({
-    state: {
-        count: 0,
-        profile: null,
-        messages: [],
-        editingMessage: null
-    },
-    mutations: {
-        increment (state) {
-            state.count++
-        },
-        setProfile(state, payload) {
-            state.profile = payload;
-        },
-        setMessages(state, payload) {
-            state.messages = payload;
-        },
-        setEditingMessage(state, payload) {
-            state.editingMessage = payload;
-        },
-    },
-    getters: {
-        getProfile: state => state.profile,
-        getMessages: state => state.messages,
-        getEditingMessage: state => state.editingMessage,
+    modules: {
+        main: mainStore,
+        subscripModal: subscripModalStore,
     }
 });
 

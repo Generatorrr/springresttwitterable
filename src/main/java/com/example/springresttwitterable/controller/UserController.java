@@ -3,12 +3,14 @@ package com.example.springresttwitterable.controller;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
 import com.example.springresttwitterable.entity.dto.user.UserDTO;
+import com.example.springresttwitterable.entity.dto.user.UserForAdminDTO;
 import com.example.springresttwitterable.entity.dto.user.UserSubscribDTO;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument;
@@ -42,20 +45,19 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-//    @ApiOperation(value = "Get all users", response = HTMLDocument.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = ""),
-//            @ApiResponse(code = 400, message = "Bad request"),
-//            @ApiResponse(code = 403, message = "Forbidden")
-//        }
-//    )
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    @GetMapping
-//    public String getAllUsers(Model model) {
-//
-//        model.addAttribute("users", userService.findAll());
-//        return "userList";
-//    }
+    @ApiOperation(value = "Get all users", response = HTMLDocument.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = ""),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 403, message = "Forbidden")
+        }
+    )
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<UserForAdminDTO>> getAllUsers() {
+
+        return new ResponseEntity<>(userMapper.convertToUserForAdminDTO(userService.findAll()), HttpStatus.OK);
+    }
 
 //    @ApiOperation(value = "Get specific user", response = HTMLDocument.class)
 //    @ApiResponses(value = {

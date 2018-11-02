@@ -3,11 +3,13 @@ package com.example.springresttwitterable.entity.mapper;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.user.InitialUserDTO;
 import com.example.springresttwitterable.entity.dto.user.UserAuthorDTO;
+import com.example.springresttwitterable.entity.dto.user.UserForAdminDTO;
 import com.example.springresttwitterable.entity.dto.user.UserSubscribDTO;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,4 +30,7 @@ public interface UserMapper
     
     UserSubscribDTO convertToUserSubscribDTO(User user);
     Set<UserSubscribDTO> convertToUserSubscribDTO(Set<User> user);
+    
+    UserForAdminDTO convertToUserForAdminDTO(User user);
+    List<UserForAdminDTO> convertToUserForAdminDTO(List<User> users);
 }
