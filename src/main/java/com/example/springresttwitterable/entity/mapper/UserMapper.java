@@ -3,9 +3,12 @@ package com.example.springresttwitterable.entity.mapper;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.user.InitialUserDTO;
 import com.example.springresttwitterable.entity.dto.user.UserAuthorDTO;
+import com.example.springresttwitterable.entity.dto.user.UserSubscribDTO;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.Set;
 
 /**
  * User mapper for API communications
@@ -20,5 +23,9 @@ public interface UserMapper
 {
     
     InitialUserDTO convertToInitialUserDTO(User user);
+    
     UserAuthorDTO convertToAuthorDTO(User user);
+    
+    UserSubscribDTO convertToUserSubscribDTO(User user);
+    Set<UserSubscribDTO> convertToUserSubscribDTO(Set<User> user);
 }

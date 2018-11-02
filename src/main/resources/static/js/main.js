@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import Toasted from 'vue-toasted'
+
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
 import Profile from 'components/profile/Profile.vue'
@@ -8,6 +10,7 @@ import UserMessages from 'components/messages/UserMessages.vue'
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(Toasted);
 
 const routes = [
     { path: '/', component: Home, props: true },

@@ -46,9 +46,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * TODO: write a brief summary fragment.
- * <p>
- * TODO: write a detailed description.
+ * Controller for work with {@link Message} entity.
  * <p>
  * Created on 10/25/18.
  * <p>
