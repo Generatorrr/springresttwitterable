@@ -5,7 +5,7 @@
         <a class="page-link" tabindex="-1">Pages</a>
       </li>
       <li v-for="index in pagerBody"
-          v-bind:class="{ active: index === pageInfo.currentPage, disabled: index === -1 }"
+          v-bind:class="{ active: pagerBody instanceof Array ? index === pageInfo.currentPage : index - 1 === pageInfo.currentPage, disabled: index === -1 }"
           class="page-item">
         <a class="page-link" tabindex="-1"
           v-on:click="loadMessagePage(index)">{{index !== -1 ? index : '...'}}</a>
@@ -35,7 +35,7 @@
           return;
         }
         axios
-          .get(`${location.origin}/message?page=${page}&size=1${this.filter ? `&filter=${this.filter}` : ''}`)
+          .get(`${location.origin}/message?page=${this.pagerBody instanceof Array ? page : page - 1}&size=1${this.filter ? `&filter=${this.filter}` : ''}`)
           .then(response => {
             this.$store.commit('setMessages', response.data.messages);
             this.$store.commit('setPageInfo', response.data.page);
@@ -46,6 +46,9 @@
           });
       },
       updatePager() {
+        if (this.pageInfo.total < 7) {
+          return this.pagerBody = this.pageInfo.total;
+        }
         const currentPage = this.pageInfo.currentPage;
         const head = currentPage > 4
           ? [1, -1]
