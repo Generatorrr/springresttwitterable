@@ -83,7 +83,7 @@ public class MessageController
     )
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ListMessageDTO>> main(
+    public List<ListMessageDTO> main(
             @RequestParam(required = false, defaultValue = "") String filter
     ) {
 
@@ -94,11 +94,12 @@ public class MessageController
             toResponse = (List<Message>) messageRepository.findAll();
         }
         
-        return new ResponseEntity<>(messageMapper.convert(toResponse), HttpStatus.OK);
+        return messageMapper.convert(toResponse);
     }
 
     @GetMapping("user/{user}")
-    public ResponseEntity<ChannelDTO> userMessages(
+    @ResponseBody
+    public ChannelDTO userMessages(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user
     ) {
@@ -110,7 +111,7 @@ public class MessageController
         channelDTO.setSubscribersCount(user.getSubscribers().size());
         channelDTO.setSubscriber(user.getSubscribers().contains(currentUser));
         channelDTO.setCurrentUser(currentUser.equals(user));
-        return new ResponseEntity<>(channelDTO, HttpStatus.OK);
+        return channelDTO;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)

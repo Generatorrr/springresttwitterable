@@ -40,10 +40,10 @@
       getFilteredMessages() {
         debugger;
         axios
-          .get(`${location.origin}${this.$route.path}?filter=${this.filter}`)
+          .get(`${location.origin}/message?filter=${this.filter}`)
           .then(response => {
             debugger;
-            this.$store.commit('setMessages', JSON.parse(response.data));
+            this.$store.commit('setMessages', response.data);
           })
           .catch(err => {
             console.log(err)

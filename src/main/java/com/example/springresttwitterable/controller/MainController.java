@@ -12,12 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.text.html.HTMLDocument;
 
@@ -27,7 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @Controller
-@Api(value="Main API controller", description="Operations with messages, media files etc.")
+@Api(value="Main API controller", description="Serves like entry point to return main template.")
 public class MainController {
 
     @Value("${upload.path}")
@@ -68,25 +65,5 @@ public class MainController {
         model.addAttribute("isDevMode", "dev".equals(profile));
 
         return "index";
-    }
-
-    @GetMapping("user-messages/{user}")
-    public String userMessages(
-            @AuthenticationPrincipal User currentUser,
-            @PathVariable User user,
-            Model model,
-            @RequestParam(required = false) Message message
-    ) {
-
-        Set<Message> messages = user.getMessages();
-        model.addAttribute("userChannel", user);
-        model.addAttribute("subscriptionsCount", user.getSubscribtions().size());
-        model.addAttribute("subscribersCount", user.getSubscribers().size());
-        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
-        model.addAttribute("messages", messages);
-        model.addAttribute("message", message);
-        model.addAttribute("isCurrentUser", currentUser.equals(user));
-
-        return "userMessages";
     }
 }
