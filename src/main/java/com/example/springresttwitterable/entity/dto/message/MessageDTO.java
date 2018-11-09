@@ -1,17 +1,15 @@
 package com.example.springresttwitterable.entity.dto.message;
 
 import com.example.springresttwitterable.entity.Message;
-import com.example.springresttwitterable.entity.dto.user.UserDTO;
+import com.example.springresttwitterable.entity.dto.PageDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
+import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO class for {@link Message}
@@ -21,23 +19,11 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageDTO implements Serializable
 {
-    private Long id;
-
-    @NotBlank(message = "Please, fill the message")
-    @Length(max = 2048, message = "Message too long (more than 2 kB)")
-    private String text;
-
-    @Length(max = 255, message = "Tag is too long")
-    private String tag;
-
-    private UserDTO author;
-
-    private boolean edited;
-    
-    private MultipartFile file;
-
-    private String filename;
+    List<ListMessageDTO> messages;
+    PageDTO page;
 }

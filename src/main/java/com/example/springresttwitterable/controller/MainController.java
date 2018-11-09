@@ -3,18 +3,20 @@ package com.example.springresttwitterable.controller;
 import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.InitialFrontendDataDTO;
+import com.example.springresttwitterable.entity.dto.PageDTO;
 import com.example.springresttwitterable.entity.mapper.MessageMapper;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 import javax.swing.text.html.HTMLDocument;
 
@@ -54,13 +56,16 @@ public class MainController {
     @RequestMapping("/")
     public String greeting(
             Model model,
-            @AuthenticationPrincipal User user
+            @AuthenticationPrincipal User user,
+            @PageableDefault Pageable pageable
     ) {
-        
+
+        Page<Message> messages = messageRepository.findAll(pageable);
+        Pageable pageInfo = messages.getPageable();
         InitialFrontendDataDTO initialFrontendDataDTO = new InitialFrontendDataDTO();
-        initialFrontendDataDTO.setMessages(messageMapper.convert((List<Message>) messageRepository.findAll()));
+        initialFrontendDataDTO.setMessages(messageMapper.convertToList(messages));
         initialFrontendDataDTO.setProfile(userMapper.convertToInitialUserDTO(user));
-        
+        initialFrontendDataDTO.setPage(new PageDTO(messages.getTotalPages(), pageInfo.getPageNumber(), pageInfo.getPageSize()));
         model.addAttribute("frontendData", initialFrontendDataDTO);
         model.addAttribute("isDevMode", "dev".equals(profile));
 

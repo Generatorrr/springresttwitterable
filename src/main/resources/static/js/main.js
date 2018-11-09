@@ -5,6 +5,7 @@ import Toasted from 'vue-toasted'
 
 import mainStore from './store/mainStore.js'
 import subscripModalStore from './store/subscripModalStore.js'
+import pagerStore from './store/pagerStore.js'
 
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
     modules: {
         main: mainStore,
         subscripModal: subscripModalStore,
+        pager: pagerStore,
     }
 });
 

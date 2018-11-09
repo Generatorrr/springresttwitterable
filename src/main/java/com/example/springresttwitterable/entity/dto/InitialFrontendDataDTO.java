@@ -22,4 +22,5 @@ public class InitialFrontendDataDTO implements Serializable
 {
     private InitialUserDTO profile;
     private List<ListMessageDTO> messages;
+    private PageDTO page;
 }

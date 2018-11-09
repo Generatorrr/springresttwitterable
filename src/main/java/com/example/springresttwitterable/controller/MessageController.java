@@ -8,15 +8,20 @@ package com.example.springresttwitterable.controller;
 import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.ChannelDTO;
-import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
+import com.example.springresttwitterable.entity.dto.PageDTO;
+import com.example.springresttwitterable.entity.dto.message.MessageDTO;
 import com.example.springresttwitterable.entity.dto.message.NewMessageDTO;
 import com.example.springresttwitterable.entity.dto.message.UpdateMessageDTO;
 import com.example.springresttwitterable.entity.mapper.MessageMapper;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,15 +68,15 @@ public class MessageController
 
     
     private final MessageRepository messageRepository;
-    private final MessageMapper messageMapper;
-    private final UserMapper userMapper;
+    
+    @Autowired
+    private MessageMapper messageMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-    public MessageController(MessageRepository messageRepository, MessageMapper messageMapper,
-            UserMapper userMapper)
+    public MessageController(MessageRepository messageRepository)
     {
         this.messageRepository = messageRepository;
-        this.messageMapper = messageMapper;
-        this.userMapper = userMapper;
     }
 
     @ApiOperation(value = "Get messages", response = HTMLDocument.class)
@@ -83,18 +87,22 @@ public class MessageController
     )
     @GetMapping
     @ResponseBody
-    public List<ListMessageDTO> main(
-            @RequestParam(required = false, defaultValue = "") String filter
+    public MessageDTO getMessages(
+            @RequestParam(required = false, defaultValue = "") String filter,
+            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
-        List<Message> toResponse;
+        Page<Message> toResponse;
         if (null != filter && !filter.isEmpty()) {
-            toResponse = messageRepository.findByTag(filter);
+            toResponse = messageRepository.findByTag(filter, pageable);
         } else {
-            toResponse = (List<Message>) messageRepository.findAll();
+            toResponse = messageRepository.findAll(pageable);
         }
-        
-        return messageMapper.convert(toResponse);
+        Pageable pageInfo = toResponse.getPageable();
+        return new MessageDTO(
+                messageMapper.convertToList(toResponse),
+                new PageDTO(toResponse.getTotalPages(), pageInfo.getPageNumber(), pageInfo.getPageSize())
+        );
     }
 
     @GetMapping("user/{user}")
@@ -105,7 +113,7 @@ public class MessageController
     ) {
         
         ChannelDTO channelDTO = new ChannelDTO();
-        channelDTO.setMessages(messageMapper.convert(user.getMessages()));
+        channelDTO.setMessages(messageMapper.convertToList(user.getMessages()));
         channelDTO.setUserChannel(userMapper.convertToAuthorDTO(user));
         channelDTO.setSubscriptionsCount(user.getSubscribtions().size());
         channelDTO.setSubscribersCount(user.getSubscribers().size());

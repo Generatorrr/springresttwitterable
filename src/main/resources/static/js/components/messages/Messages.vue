@@ -9,7 +9,7 @@
       </div>
     </div>
     <message-edit></message-edit>
-    <message-list :messages="messages" :profile="profile"></message-list>
+    <message-list :pageInfo="pageInfo" :messages="messages" :profile="profile"></message-list>
   </div>
 </template>
 
@@ -29,6 +29,9 @@
       },
       messages() {
         return this.$store.getters.getMessages;
+      },
+      pageInfo() {
+        return this.$store.getters.getPageInfo;
       }
     },
     data() {
@@ -38,15 +41,17 @@
     },
     methods: {
       getFilteredMessages() {
-        debugger;
+        if (this.filter !== "") {
+          this.$store.commit('setFilter', this.filter);
+        }
         axios
-          .get(`${location.origin}/message?filter=${this.filter}`)
+          .get(`${location.origin}/message?page=${this.pageInfo.currentPage}&filter=${this.filter}`)
           .then(response => {
-            debugger;
-            this.$store.commit('setMessages', response.data);
+            this.$store.commit('setMessages', response.data.messages);
+            this.$store.commit('setPageInfo', response.data.page);
           })
           .catch(err => {
-            console.log(err)
+            console.log(err);
           });
       }
     }

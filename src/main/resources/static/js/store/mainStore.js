@@ -3,6 +3,7 @@ export default {
     count: 0,
     profile: null,
     messages: [],
+    filter: "",
     editingMessage: null,
     channel: null,
   },
@@ -18,11 +19,15 @@ export default {
     },
     setChannel(state, payload) {
       state.channel = payload;
-    }
+    },
+    setFilter(state, payload) {
+      state.filter = payload;
+    },
   },
   getters: {
     getProfile: state => state.profile,
     getMessages: state => state.messages,
+    getFilter: state => state.filter,
     getEditingMessage: state => state.editingMessage,
     getChannel: state => state.channel,
   }

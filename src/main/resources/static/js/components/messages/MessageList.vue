@@ -1,5 +1,6 @@
 <template>
   <div>
+    <pager v-if="pageInfo && pageInfo.total > 1"></pager>
     <div class="card-columns">
       <div v-if="messages && messages.length">
         <div class="card my-3" v-for="message in messages">
@@ -25,12 +26,16 @@
       </div>
       <p v-else>No messages found</p>
     </div>
+    <pager v-if="pageInfo && pageInfo.total > 1"></pager>
   </div>
 </template>
 
 <script>
+  import Pager from './../pager/Pager.vue'
+  
   export default {
-    props: [ 'messages', 'profile' ],
+    components: { Pager },
+    props: [ 'messages', 'profile', 'pageInfo' ],
     data() {
       return {
         message: this.message
