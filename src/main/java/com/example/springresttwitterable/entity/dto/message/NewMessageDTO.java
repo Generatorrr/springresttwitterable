@@ -1,5 +1,6 @@
 package com.example.springresttwitterable.entity.dto.message;
 
+import com.example.springresttwitterable.entity.dto.validation.MaxFileSizeConstraint;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.validator.constraints.Length;
@@ -29,6 +30,7 @@ public class NewMessageDTO implements Serializable
 
     @Length(max = 255, message = "Tag is too long")
     private String tag;
-    
+
+    @MaxFileSizeConstraint
     private MultipartFile file;
 }

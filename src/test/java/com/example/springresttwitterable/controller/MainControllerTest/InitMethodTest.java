@@ -1,4 +1,6 @@
-package com.example.springresttwitterable.controller;
+package com.example.springresttwitterable.controller.MainControllerTest;
+
+import com.example.springresttwitterable.controller.MainController;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MainControllerTest
+public class InitMethodTest
 {
     
     @LocalServerPort

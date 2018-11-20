@@ -54,7 +54,7 @@ public class MainController {
     )
     @GetMapping
     @RequestMapping("/")
-    public String greeting(
+    public String init(
             Model model,
             @AuthenticationPrincipal User user,
             @PageableDefault Pageable pageable

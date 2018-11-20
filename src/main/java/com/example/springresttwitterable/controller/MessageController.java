@@ -123,11 +123,7 @@ public class MessageController
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity addMessage
-            (
-                    @AuthenticationPrincipal User user,
-                    @Valid NewMessageDTO messageDto
-            ) throws IOException {
+    public ResponseEntity addMessage( @AuthenticationPrincipal User user, @Valid NewMessageDTO messageDto ) throws IOException {
         
         Message message = new Message();   
         message.setText(messageDto.getText());

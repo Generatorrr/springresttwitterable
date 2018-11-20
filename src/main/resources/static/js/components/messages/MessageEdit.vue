@@ -60,10 +60,11 @@
          method: this.$refs.messageId.value ? 'put' : 'post',
          body: formData
        })
-         .then(() => {
+         .then((res) => {
            debugger;
          })
          .catch(err => {
+           debugger;
            console.log(err);
          });
      },
