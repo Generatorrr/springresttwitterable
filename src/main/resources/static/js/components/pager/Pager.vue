@@ -35,7 +35,7 @@
           return;
         }
         axios
-          .get(`${location.origin}/message?page=${this.pagerBody instanceof Array ? page : page - 1}&size=1${this.filter ? `&filter=${this.filter}` : ''}`)
+          .get(`${location.origin}/message?page=${this.pagerBody instanceof Array ? page : page - 1}${this.filter ? `&filter=${this.filter}` : ''}`)
           .then(response => {
             this.$store.commit('setMessages', response.data.messages);
             this.$store.commit('setPageInfo', response.data.page);
@@ -62,7 +62,6 @@
         const bodyAfter = currentPage + 1 > 2 && currentPage < this.pageInfo.total - 3
                 ? [currentPage + 1, currentPage + 2]
                 : [];
-        debugger;
         let tempBody = head.concat(bodyBefore);
         if (currentPage > 3 && currentPage < this.pageInfo.total - 2) {
           tempBody.push(currentPage);

@@ -79,14 +79,14 @@ public class MessageController
         this.messageRepository = messageRepository;
     }
 
+    @GetMapping
+    @ResponseBody
     @ApiOperation(value = "Get messages", response = HTMLDocument.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully return messages"),
             @ApiResponse(code = 403, message = "Forbidden")
             }
     )
-    @GetMapping
-    @ResponseBody
     public MessageDTO getMessages(
             @RequestParam(required = false, defaultValue = "") String filter,
             @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable
@@ -107,7 +107,7 @@ public class MessageController
 
     @GetMapping("user/{user}")
     @ResponseBody
-    public ChannelDTO userMessages(
+    public ChannelDTO getUserMessages(
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user
     ) {

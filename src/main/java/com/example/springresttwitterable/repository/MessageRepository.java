@@ -10,5 +10,4 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
 
     Page<Message> findAll(Pageable pageable);
     Page<Message> findByTag(String tag, Pageable pageable);
-
 }

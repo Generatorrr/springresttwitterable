@@ -3,19 +3,16 @@ package com.example.springresttwitterable.config;
 import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.repository.UserRepository;
-import com.example.springresttwitterable.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,15 +20,12 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Sso
+@ActiveProfiles({ "default", "dev" })
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-            
-            "/",
-            "/login", 
-            "/js/**",
-            "/error**"
+            "/", "/login", "/js/**", "/static/**", "/error**"
     };
 
     @Bean
@@ -56,6 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             
             return userRepository.save(user);
         };
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("test")
+                .password("secretPassword")
+                .roles("USER");
     }
 
     @Override
