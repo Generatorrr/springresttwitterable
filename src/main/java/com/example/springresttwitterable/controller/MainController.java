@@ -65,7 +65,7 @@ public class MainController {
         InitialFrontendDataDTO initialFrontendDataDTO = new InitialFrontendDataDTO();
         initialFrontendDataDTO.setMessages(messageMapper.convertToList(messages));
         initialFrontendDataDTO.setProfile(userMapper.convertToInitialUserDTO(user));
-        initialFrontendDataDTO.setPage(new PageDTO(messages.getTotalPages(), pageInfo.getPageNumber(), pageInfo.getPageSize()));
+        initialFrontendDataDTO.setPage(new PageDTO(messages.getTotalPages(), (int) messages.getTotalElements(), pageInfo.getPageNumber(), pageInfo.getPageSize()));
         model.addAttribute("frontendData", initialFrontendDataDTO);
         model.addAttribute("isDevMode", "dev".equals(profile));
 

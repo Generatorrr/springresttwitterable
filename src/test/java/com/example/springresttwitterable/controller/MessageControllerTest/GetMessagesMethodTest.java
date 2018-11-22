@@ -109,7 +109,8 @@ public class GetMessagesMethodTest extends BaseControllerTest
         // Test page size and message author is like expected
         assertThat(messageDTO.getMessages().size(), is(10));
         assertThat(messageDTO.getPage().getCurrentPage(), is(0));
-        assertThat(messageDTO.getPage().getTotal(), is(10));
+        assertThat(messageDTO.getPage().getTotalPages(), is(10));
+        assertThat(messageDTO.getPage().getTotalDocs(), is(100));
         assertThat(messageDTO.getMessages().size(), is(messageDTO.getPage().getPageSize()));
         assertThat(messageDTO.getMessages().get(0).getAuthor(), is(convertedTestUserDTO));
         
@@ -151,7 +152,8 @@ public class GetMessagesMethodTest extends BaseControllerTest
         assertThat(messageDTO.getMessages().size(), is(100));
         assertThat(messageDTO.getMessages().size(), is(messageDTO.getPage().getPageSize()));
         assertThat(messageDTO.getPage().getCurrentPage(), is(0));
-        assertThat(messageDTO.getPage().getTotal(), is(1));
+        assertThat(messageDTO.getPage().getTotalPages(), is(1));
+        assertThat(messageDTO.getPage().getTotalDocs(), is(100));
     }
 
     @Test
@@ -168,6 +170,7 @@ public class GetMessagesMethodTest extends BaseControllerTest
         assertThat(messageDTO.getMessages().size(), is(25));
         assertThat(messageDTO.getMessages().size(), is(messageDTO.getPage().getPageSize()));
         assertThat(messageDTO.getPage().getCurrentPage(), is(2));
-        assertThat(messageDTO.getPage().getTotal(), is(4));
+        assertThat(messageDTO.getPage().getTotalPages(), is(4));
+        assertThat(messageDTO.getPage().getTotalDocs(), is(100));
     }
 }

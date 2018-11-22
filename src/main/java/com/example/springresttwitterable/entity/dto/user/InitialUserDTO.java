@@ -10,11 +10,12 @@ import com.example.springresttwitterable.entity.Role;
 import com.example.springresttwitterable.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;

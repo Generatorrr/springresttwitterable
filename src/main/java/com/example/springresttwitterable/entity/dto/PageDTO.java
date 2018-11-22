@@ -24,7 +24,8 @@ import lombok.Data;
 public class PageDTO
 {
     
-    private int total;
+    private int totalPages;
+    private int totalDocs;
     private int currentPage;
     private int pageSize;
 }

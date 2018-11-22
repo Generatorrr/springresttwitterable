@@ -101,7 +101,7 @@ public class MessageController
         Pageable pageInfo = toResponse.getPageable();
         return new MessageDTO(
                 messageMapper.convertToList(toResponse),
-                new PageDTO(toResponse.getTotalPages(), pageInfo.getPageNumber(), pageInfo.getPageSize())
+                new PageDTO(toResponse.getTotalPages(), (int) toResponse.getTotalElements(), pageInfo.getPageNumber(), pageInfo.getPageSize())
         );
     }
 
@@ -122,24 +122,26 @@ public class MessageController
         return channelDTO;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity addMessage( @AuthenticationPrincipal User user, @Valid NewMessageDTO messageDto ) throws IOException {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity addMessage( @AuthenticationPrincipal User currentUser, @Valid NewMessageDTO messageDto )
+            throws IOException
+    {
         
         Message message = new Message();   
         message.setText(messageDto.getText());
         message.setTag(messageDto.getTag());
-        message.setAuthor(user);
+        message.setAuthor(currentUser);
         saveFile(message, messageDto.getFile());
         messageRepository.save(message);
 
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity updateMessage(
-            @AuthenticationPrincipal User currentUser,
-            @Valid UpdateMessageDTO messageDTO
-    ) throws IOException {
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseBody
+    public ResponseEntity updateMessage( @AuthenticationPrincipal User currentUser, @Valid UpdateMessageDTO messageDTO )
+            throws IOException {
+        
         Optional<Message> optionalMessage = messageRepository.findById(messageDTO.getId());
         if (!optionalMessage.isPresent()) {
             return ResponseEntity.notFound().build();
