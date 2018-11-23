@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pager v-if="pageInfo && pageInfo.total > 1"></pager>
+    <pager v-if="pageInfo && pageInfo.totalPages > 1"></pager>
     <div class="card-columns">
       <div v-if="messages && messages.length">
         <div class="card my-3" v-for="message in messages">
@@ -16,7 +16,7 @@
             <div class="message-footer_flex-block" v-bind:class="{ directColumn: message.author.id !== profile.id }">
               <img v-if="message.author && message.author.userpic" :src="message.author.userpic" alt="User's avatar" />
               <router-link :to="`/user-messages/${message.author.id}`">{{message.author.name}}</router-link>
-              <b><span v-if="message.edited">edited</span></b>
+              <div v-if="message.edited"><i alt="Edited" class="fas fa-pencil-alt"></i></div>
             </div>
             
             <a v-if="message.author.id === profile.id" class="btn btn-primary"
@@ -26,7 +26,7 @@
       </div>
       <p v-else>No messages found</p>
     </div>
-    <pager v-if="pageInfo && pageInfo.total > 1"></pager>
+    <pager v-if="pageInfo && pageInfo.totalPages > 1"></pager>
   </div>
 </template>
 

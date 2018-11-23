@@ -44,6 +44,7 @@
         if (this.filter !== "") {
           this.$store.commit('setFilter', this.filter);
         }
+        debugger;
         axios
           .get(`${location.origin}/message?page=${this.pageInfo.currentPage}&filter=${this.filter}`)
           .then(response => {

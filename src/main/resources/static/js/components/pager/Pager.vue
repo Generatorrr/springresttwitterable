@@ -46,24 +46,24 @@
           });
       },
       updatePager() {
-        if (this.pageInfo.total < 7) {
-          return this.pagerBody = this.pageInfo.total;
+        if (this.pageInfo.totalPages < 7) {
+          return this.pagerBody = this.pageInfo.totalPages;
         }
         const currentPage = this.pageInfo.currentPage;
         const head = currentPage > 4
           ? [1, -1]
           : [1, 2, 3];
-        const tail = currentPage < this.pageInfo.total - 3
-                ? [-1, this.pageInfo.total]
-                : [this.pageInfo.total - 2, this.pageInfo.total - 1, this.pageInfo.total];
-        const bodyBefore = currentPage + 1 > 4 && currentPage < this.pageInfo.total - 1
+        const tail = currentPage < this.pageInfo.totalPages - 3
+                ? [-1, this.pageInfo.totalPages]
+                : [this.pageInfo.totalPages - 2, this.pageInfo.totalPages - 1, this.pageInfo.totalPages];
+        const bodyBefore = currentPage + 1 > 4 && currentPage < this.pageInfo.totalPages - 1
                 ? [currentPage - 2, currentPage - 1]
                 : [];
-        const bodyAfter = currentPage + 1 > 2 && currentPage < this.pageInfo.total - 3
+        const bodyAfter = currentPage + 1 > 2 && currentPage < this.pageInfo.totalPages - 3
                 ? [currentPage + 1, currentPage + 2]
                 : [];
         let tempBody = head.concat(bodyBefore);
-        if (currentPage > 3 && currentPage < this.pageInfo.total - 2) {
+        if (currentPage > 3 && currentPage < this.pageInfo.totalPages - 2) {
           tempBody.push(currentPage);
         }
         tempBody = tempBody.concat(bodyAfter, tail);
