@@ -62,6 +62,10 @@
        })
          .then((res) => {
            debugger;
+           return res.json()
+         })
+         .then(res => {
+           debugger;
          })
          .catch(err => {
            debugger;
