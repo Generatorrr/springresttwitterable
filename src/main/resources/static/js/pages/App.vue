@@ -33,6 +33,6 @@
   }
 </script>
 
-<style>
-
+<style lang="scss">
+  @import "./../../style/main";
 </style>

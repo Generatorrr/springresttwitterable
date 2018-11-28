@@ -3,7 +3,10 @@ package com.example.springresttwitterable.controller.MessageControllerTest;
 import com.example.springresttwitterable.TestConstants;
 import com.example.springresttwitterable.controller.BaseControllerTest;
 import com.example.springresttwitterable.controller.MessageController;
+import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
+import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
+import com.example.springresttwitterable.entity.dto.message.MessageDTO;
 import com.example.springresttwitterable.entity.dto.message.NewMessageDTO;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.error.RestExceptionHandler;
@@ -19,10 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -40,12 +47,13 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Test class for {@link MessageController}'s "addMessage" method.
+ * Test class for {@link MessageController}'s "updateMessage" method.
  * <p>
  * Created on 11/5/18.
  * <p>
@@ -53,7 +61,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @Transactional
-public class AddMessageMethodTest extends BaseControllerTest
+public class UpdateMessageMethodTest extends BaseControllerTest
 {
 
     @Value("${testing.host.origin.local}")
@@ -82,18 +90,19 @@ public class AddMessageMethodTest extends BaseControllerTest
     private TestDataHelper testDataHelper;
     
     private MockMvc messageControllerMvc;
+    private MockMultipartHttpServletRequestBuilder mvcMultipartBuilder;
     private TestingAuthenticationToken authentication;
     private boolean wasInserted = false;
     private File validPicture;
     private File invalidPicture;
     private MockMultipartFile mockMultipartFile;
     private MockMultipartFile mockMultipartInvalidFile;
-    private NewMessageDTO newMessageDTO;
+    private ListMessageDTO messageForTest;
     
     
     
     @Before
-    public void setUp() throws NotFoundException, IOException
+    public void setUp() throws Exception
     {
         
         if (!wasInserted) {
@@ -102,7 +111,13 @@ public class AddMessageMethodTest extends BaseControllerTest
                 .standaloneSetup(messageController)
                 .setControllerAdvice(new RestExceptionHandler())
                 .build();
-            
+
+
+            mvcMultipartBuilder = MockMvcRequestBuilders.fileUpload(String.format("%s:%s/message", hostOrigin, port));
+            mvcMultipartBuilder.with((MockHttpServletRequest request) -> {
+                request.setMethod("PUT");
+                return request;
+            });
             User user = testDataHelper.createTestUserAndOneHundredMessagesAndReturnUserAuthorDTO();
             wasInserted = true;
             authentication = new TestingAuthenticationToken(user, null);
@@ -110,11 +125,20 @@ public class AddMessageMethodTest extends BaseControllerTest
             
             validPicture = new File(getClass().getClassLoader().getResource(TestConstants.validTestPicturePath).getFile());
             invalidPicture = new File(getClass().getClassLoader().getResource(TestConstants.invalidTestPicturePath).getFile());
-            newMessageDTO = new NewMessageDTO();
-            newMessageDTO.setText(TestConstants.newTestMessageText);
-            newMessageDTO.setTag(TestConstants.newTestMessageTag);
             mockMultipartFile = new MockMultipartFile("little_kitten", new FileInputStream(validPicture));
             mockMultipartInvalidFile = new MockMultipartFile("little_kitten", new FileInputStream(invalidPicture));
+
+            String response = MockMvcBuilders
+                    .webAppContextSetup(context)
+                    .build()
+                    .perform(get(String.format("%s:%s/message", hostOrigin, port))
+                    .principal(authentication)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                    .andReturn().getResponse().getContentAsString();
+            MessageDTO messageDTO = objectMapper.readValue(response, MessageDTO.class);
+            messageForTest = messageDTO.getMessages().get(0);
         }
     }
     
@@ -126,22 +150,37 @@ public class AddMessageMethodTest extends BaseControllerTest
             .apply(springSecurity())
             .build()
             .perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
-                    .file("file", mockMultipartFile.getBytes())
-                    .param("text", newMessageDTO.getText())
-                    .param("tag", newMessageDTO.getTag())
+                    mvcMultipartBuilder
+                    .param("id", messageForTest.getId().toString())
+                    .param("text", messageForTest.getText())
+                    .param("tag", messageForTest.getTag())
             )
             .andExpect(status().isForbidden());
     }
 
     @Test
-    public void postMessageWithEmptyTextAndGetBadRequest() throws Exception {
+    public void putValidMessageWithNotMessageAuthor() throws Exception {
+
+        String changedText = "without tag";
+        messageControllerMvc.perform(
+                mvcMultipartBuilder
+                        .file("file", mockMultipartFile.getBytes())
+                        .param("id", messageForTest.getId().toString())
+                        .param("text", changedText)
+                        .principal(authentication)
+        )
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void putMessageWithEmptyTextAndGetBadRequest() throws Exception {
 
         String errorResponse = messageControllerMvc.perform(
-            multipart(String.format("%s:%s/message", hostOrigin, port))
+                mvcMultipartBuilder
                 .file("file", mockMultipartFile.getBytes())
+                .param("id", messageForTest.getId().toString())
                 .param("text", "")
-                .param("tag", newMessageDTO.getTag())
+                .param("tag", messageForTest.getTag())
                 .principal(authentication)
         )
             .andExpect(status().isBadRequest())
@@ -152,9 +191,9 @@ public class AddMessageMethodTest extends BaseControllerTest
         assertThat(subErrorsList.size(), is(1));
 
         HashMap subErrorHashMap = (HashMap) subErrorsList.get(0);
-        
+
         assertThat(subErrorHashMap.containsKey("object"), is(true));
-        assertThat(subErrorHashMap.get("object"), is("newMessageDTO"));
+        assertThat(subErrorHashMap.get("object"), is("updateMessageDTO"));
         assertThat(subErrorHashMap.containsKey("field"), is(true));
         assertThat(subErrorHashMap.get("field"), is("text"));
         assertThat(subErrorHashMap.containsKey("rejectedValue"), is(true));
@@ -164,47 +203,60 @@ public class AddMessageMethodTest extends BaseControllerTest
     }
 
     @Test
-    public void postMessageWithInvalidFileType() throws Exception {
+    public void putMessageWithInvalidFileTypeAndBlankText() throws Exception {
 
         String errorResponse = messageControllerMvc.perform(
-            multipart(String.format("%s:%s/message", hostOrigin, port))
-                .param("file", "")
-                .param("text", "Hello")
-                .param("tag", newMessageDTO.getTag())
-                .principal(authentication)
+                mvcMultipartBuilder
+                        .param("file", "")
+                        .param("id", messageForTest.getId().toString())
+                        .param("text", "")
+                        .param("tag", messageForTest.getTag())
+                        .principal(authentication)
         )
-            .andExpect(status().isBadRequest())
-            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-            .andReturn().getResponse().getContentAsString();
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getContentAsString();
 
         ArrayList subErrorsList = testDataHelper.checkErrorResponseStructureAndReturnDetailedSubErrorList(errorResponse);
-        assertThat(subErrorsList.size(), is(1));
+        assertThat(subErrorsList.size(), is(2));
 
-        HashMap subErrorHashMap = (HashMap) subErrorsList.get(0);
+        HashMap fileSubErrorHashMap = (HashMap) subErrorsList.get(0);
 
-        assertThat(subErrorHashMap.containsKey("object"), is(true));
-        assertThat(subErrorHashMap.get("object"), is("newMessageDTO"));
-        assertThat(subErrorHashMap.containsKey("field"), is(true));
-        assertThat(subErrorHashMap.get("field"), is("file"));
-        assertThat(subErrorHashMap.containsKey("rejectedValue"), is(true));
-        assertThat(subErrorHashMap.get("rejectedValue"), is(""));
-        assertThat(subErrorHashMap.containsKey("message"), is(true));
-        assertThat((String) subErrorHashMap.get("message"), containsString("Cannot convert value of type 'java.lang.String'"));
+        assertThat(fileSubErrorHashMap.containsKey("object"), is(true));
+        assertThat(fileSubErrorHashMap.get("object"), is("updateMessageDTO"));
+        assertThat(fileSubErrorHashMap.containsKey("field"), is(true));
+        assertThat(fileSubErrorHashMap.get("field"), is("file"));
+        assertThat(fileSubErrorHashMap.containsKey("rejectedValue"), is(true));
+        assertThat(fileSubErrorHashMap.get("rejectedValue"), is(""));
+        assertThat(fileSubErrorHashMap.containsKey("message"), is(true));
+        assertThat((String) fileSubErrorHashMap.get("message"), containsString("Cannot convert value of type 'java.lang.String'"));
+
+        HashMap textSubErrorHashMap = (HashMap) subErrorsList.get(1);
+
+        assertThat(textSubErrorHashMap.containsKey("object"), is(true));
+        assertThat(textSubErrorHashMap.get("object"), is("updateMessageDTO"));
+        assertThat(textSubErrorHashMap.containsKey("field"), is(true));
+        assertThat(textSubErrorHashMap.get("field"), is("text"));
+        assertThat(textSubErrorHashMap.containsKey("rejectedValue"), is(true));
+        assertThat(textSubErrorHashMap.get("rejectedValue"), is(""));
+        assertThat(textSubErrorHashMap.containsKey("message"), is(true));
+        assertThat(textSubErrorHashMap.get("message"), is("Please, fill the message"));
     }
 
     @Test
-    public void postMessageWithInvalidTagLength() throws Exception {
+    public void putMessageWithInvalidTagLength() throws Exception {
 
         String errorResponse = messageControllerMvc.perform(
-            multipart(String.format("%s:%s/message", hostOrigin, port))
-                .file("file", mockMultipartFile.getBytes())
-                .param("text", "Hello")
-                .param("tag", RandomStringUtils.randomAlphabetic(256))
-                .principal(authentication)
+                mvcMultipartBuilder
+                        .file("file", mockMultipartFile.getBytes())
+                        .param("id", messageForTest.getId().toString())
+                        .param("text", "Hello")
+                        .param("tag", RandomStringUtils.randomAlphabetic(256))
+                        .principal(authentication)
         )
-            .andExpect(status().isBadRequest())
-            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-            .andReturn().getResponse().getContentAsString();
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getContentAsString();
 
         ArrayList subErrorsList = testDataHelper.checkErrorResponseStructureAndReturnDetailedSubErrorList(errorResponse);
         assertThat(subErrorsList.size(), is(1));
@@ -212,10 +264,10 @@ public class AddMessageMethodTest extends BaseControllerTest
         HashMap subErrorHashMap = (HashMap) subErrorsList.get(0);
 
         assertThat(subErrorHashMap.containsKey("object"), is(true));
-        assertThat(subErrorHashMap.get("object"), is("newMessageDTO"));
+        assertThat(subErrorHashMap.get("object"), is("updateMessageDTO"));
         assertThat(subErrorHashMap.containsKey("field"), is(true));
         assertThat(subErrorHashMap.get("field"), is("tag"));
-        
+
         String rejectedString = (String) subErrorHashMap.get("rejectedValue");
         assertNotNull(rejectedString);
         assertThat(rejectedString.length(), is(256));
@@ -224,11 +276,12 @@ public class AddMessageMethodTest extends BaseControllerTest
     }
 
     @Test
-    public void postMessageWithInvalidImage() throws Exception {
+    public void putMessageWithInvalidImage() throws Exception {
 
         String errorResponse = messageControllerMvc.perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
+                mvcMultipartBuilder
                         .file("file", mockMultipartInvalidFile.getBytes())
+                        .param("id", messageForTest.getId().toString())
                         .param("text", "Hello")
                         .param("tag", "some_tag")
                         .principal(authentication)
@@ -243,7 +296,7 @@ public class AddMessageMethodTest extends BaseControllerTest
         HashMap subErrorHashMap = (HashMap) subErrorsList.get(0);
 
         assertThat(subErrorHashMap.containsKey("object"), is(true));
-        assertThat(subErrorHashMap.get("object"), is("newMessageDTO"));
+        assertThat(subErrorHashMap.get("object"), is("updateMessageDTO"));
         assertThat(subErrorHashMap.containsKey("field"), is(true));
         assertThat(subErrorHashMap.get("field"), is("file"));
         assertThat(subErrorHashMap.containsKey("rejectedValue"), is(true));
@@ -252,49 +305,34 @@ public class AddMessageMethodTest extends BaseControllerTest
         assertThat(subErrorHashMap.get("message"), is("Please, don't upload files with size more than 500 kB!"));
     }
 
+//    @Test
+//    public void putValidMessageWithoutTag() throws Exception {
+//
+//        String changedText = "without tag";
+//        messageControllerMvc.perform(
+//                mvcMultipartBuilder
+//                        .file("file", mockMultipartFile.getBytes())
+//                        .param("id", messageForTest.getId().toString())
+//                        .param("text", changedText)
+//                        .principal(authentication)
+//        )
+//                .andExpect(status().isOk());
+//
+//        // Check for empty Optional haven't made cause we are in a test case and it'll throw NPE in this case.
+//        // Always check for NPE in any case excepts test cases;)
+//        Message changedMessage = messageRepository.findById(messageForTest.getId()).get();
+//        assertThat(changedMessage.getText(), is(changedText));
+//    }
+
     @Test
-    public void postValidMessageWithoutTag() throws Exception {
+    public void putValidMessage() throws Exception {
 
         messageControllerMvc.perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
+                mvcMultipartBuilder
                         .file("file", mockMultipartFile.getBytes())
-                        .param("text", newMessageDTO.getText())
-                        .principal(authentication)
-        )
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void postValidMessageWithoutImage() throws Exception {
-
-        messageControllerMvc.perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
-                        .param("text", newMessageDTO.getText())
-                        .param("tag", newMessageDTO.getTag())
-                        .principal(authentication)
-        )
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void postValidMessageWithoutImageAndWithoutTag() throws Exception {
-
-        messageControllerMvc.perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
-                        .param("text", newMessageDTO.getText())
-                        .principal(authentication)
-        )
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void postMessageWithValidImageFile() throws Exception {
-
-        messageControllerMvc.perform(
-                multipart(String.format("%s:%s/message", hostOrigin, port))
-                        .file("file", mockMultipartFile.getBytes())
-                        .param("text", newMessageDTO.getText())
-                        .param("tag", newMessageDTO.getTag())
+                        .param("id", messageForTest.getId().toString())
+                        .param("text", "Hello!!!:) Text has been changed.")
+                        .param("tag", messageForTest.getTag())
                         .principal(authentication)
         )
                 .andExpect(status().isOk());

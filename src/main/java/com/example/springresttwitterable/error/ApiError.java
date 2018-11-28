@@ -9,6 +9,7 @@ import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -127,7 +128,6 @@ public class ApiError {
 
     @Data
     @EqualsAndHashCode(callSuper = false)
-    @AllArgsConstructor
     class ApiValidationError extends ApiSubError {
         private String object;
         private String field;
@@ -136,6 +136,14 @@ public class ApiError {
 
         ApiValidationError(String object, String message) {
             this.object = object;
+            this.message = message;
+        }
+
+        public ApiValidationError(String object, String field, Object rejectedValue, String message)
+        {
+            this.object = object;
+            this.field = field;
+            this.rejectedValue = rejectedValue instanceof MultipartFile ? "MultipartFile" : rejectedValue;
             this.message = message;
         }
     }

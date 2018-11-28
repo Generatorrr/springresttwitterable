@@ -31,7 +31,10 @@
   </div>
 </template>
 
-<script>  
+<script>
+  import fontawesome from '@fortawesome/fontawesome'
+  import faSolid from '@fortawesome/fontawesome-free-solid'
+  
  export default {
    computed: {
      editingMessage() {
@@ -60,12 +63,16 @@
          method: this.$refs.messageId.value ? 'put' : 'post',
          body: formData
        })
-         .then((res) => {
-           debugger;
-           return res.json()
-         })
+         .then(res => res.json())
          .then(res => {
-           debugger;
+           if (res.apierror) {
+             this.$toasted.error(` ${res.apierror.message}: ${res.apierror.status}!`, {
+               theme: "bubble",
+               position: "top-center",
+               duration : 3000,
+               icon: "error_outline"
+             });
+           }
          })
          .catch(err => {
            debugger;

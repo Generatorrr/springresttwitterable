@@ -5,11 +5,16 @@ import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
@@ -17,6 +22,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import javassist.NotFoundException;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 /**
  * DB filler for test classes;
@@ -28,7 +38,7 @@ import javassist.NotFoundException;
 
 @Transactional
 @Component
-public class TestDataFiller
+public class TestDataHelper
 {
 
     @PersistenceContext
@@ -39,6 +49,9 @@ public class TestDataFiller
     
     @Autowired
     private UserMapper userMapper;
+    
+    @Autowired
+    ObjectMapper objectMapper;
     
     public User createTestUserAndOneHundredMessagesAndReturnUserAuthorDTO() throws NotFoundException {
         
@@ -75,5 +88,28 @@ public class TestDataFiller
         entityManager.flush();
         
         return testUser;
+    }
+    
+    public ArrayList checkErrorResponseStructureAndReturnDetailedSubErrorList(String errorResponse) throws IOException
+    {
+        
+        HashMap errorHashMap = objectMapper.readValue(errorResponse, HashMap.class);
+
+        assertThat(errorHashMap.containsKey("apierror"), is(true));
+
+        HashMap innerErrorHashMap = (HashMap) errorHashMap.get("apierror");
+
+        assertThat(innerErrorHashMap.size(), is(5));
+        assertThat(innerErrorHashMap.containsKey("status"), is(true));
+        assertThat(innerErrorHashMap.get("status"), is("BAD_REQUEST"));
+        assertThat(innerErrorHashMap.containsKey("timestamp"), is(true));
+        assertThat(TestConstants.extractFromString((String) innerErrorHashMap.get("timestamp")) , is(lessThan(LocalDateTime.now())));
+        assertThat(innerErrorHashMap.containsKey("message"), is(true));
+        assertThat(innerErrorHashMap.get("message"), is("Validation error"));
+        assertThat(innerErrorHashMap.containsKey("debugMessage"), is(true));
+        assertNull(innerErrorHashMap.get("debugMessage"));
+        assertThat(innerErrorHashMap.containsKey("subErrors"), is(true));
+
+        return (ArrayList) innerErrorHashMap.get("subErrors");
     }
 }

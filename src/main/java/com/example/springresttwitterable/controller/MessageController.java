@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -65,7 +66,6 @@ public class MessageController
 
     @Value("${upload.path}")
     private String uploadPath;
-
     
     private final MessageRepository messageRepository;
     
@@ -138,7 +138,6 @@ public class MessageController
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @ResponseBody
     public ResponseEntity updateMessage( @AuthenticationPrincipal User currentUser, @Valid UpdateMessageDTO messageDTO )
             throws IOException {
         
@@ -147,16 +146,19 @@ public class MessageController
             return ResponseEntity.notFound().build();
         }
         Message message = optionalMessage.get();
+
+        if (!message.getAuthor().equals(currentUser)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        
         if (message.getAuthor().equals(currentUser)) {
-            if(!StringUtils.isEmpty(messageDTO.getText())) {
-                message.setText(messageDTO.getText());
-            }
-            if(!StringUtils.isEmpty(messageDTO.getTag())) {
-                message.setTag(messageDTO.getTag());
-            }
+            
+            message.setText(messageDTO.getText());
+            message.setTag(messageDTO.getTag());
             saveFile(message, messageDTO.getFile());
             message.setEdited(true);
             messageRepository.save(message);
+            
         }
 
         return ResponseEntity.ok().build();

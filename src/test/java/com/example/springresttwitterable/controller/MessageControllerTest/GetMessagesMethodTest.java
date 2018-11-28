@@ -8,7 +8,7 @@ import com.example.springresttwitterable.entity.dto.user.UserAuthorDTO;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
 import com.example.springresttwitterable.repository.UserRepository;
-import com.example.springresttwitterable.utils.TestDataFiller;
+import com.example.springresttwitterable.utils.TestDataHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
@@ -64,7 +64,7 @@ public class GetMessagesMethodTest extends BaseControllerTest
     @Autowired
     private WebApplicationContext context;
     @Autowired
-    private TestDataFiller testDataFiller;
+    private TestDataHelper testDataHelper;
 
     private MockMvc mvc;
 
@@ -83,7 +83,7 @@ public class GetMessagesMethodTest extends BaseControllerTest
                     .webAppContextSetup(context)
                     .apply(springSecurity())
                     .build();
-            User user = testDataFiller.createTestUserAndOneHundredMessagesAndReturnUserAuthorDTO();
+            User user = testDataHelper.createTestUserAndOneHundredMessagesAndReturnUserAuthorDTO();
             convertedTestUserDTO = userMapper.convertToAuthorDTO(user);
             wasInserted = true;
         }

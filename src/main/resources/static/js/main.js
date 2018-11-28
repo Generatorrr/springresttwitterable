@@ -14,7 +14,9 @@ import UserMessages from 'components/messages/UserMessages.vue'
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
-Vue.use(Toasted);
+Vue.use(Toasted, {
+  iconPack : 'fontawesome'
+});
 
 const routes = [
     { path: '/', component: Home, props: true },
