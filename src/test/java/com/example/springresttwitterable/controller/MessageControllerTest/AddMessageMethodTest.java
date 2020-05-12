@@ -11,7 +11,7 @@ import com.example.springresttwitterable.repository.MessageRepository;
 import com.example.springresttwitterable.repository.UserRepository;
 import com.example.springresttwitterable.utils.TestDataHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import javassist.NotFoundException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +32,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javassist.NotFoundException;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;

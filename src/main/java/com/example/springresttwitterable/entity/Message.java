@@ -2,6 +2,8 @@ package com.example.springresttwitterable.entity;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -19,6 +21,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Message implements Serializable
 {
 

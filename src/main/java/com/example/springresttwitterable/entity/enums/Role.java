@@ -1,4 +1,4 @@
-package com.example.springresttwitterable.entity;
+package com.example.springresttwitterable.entity.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

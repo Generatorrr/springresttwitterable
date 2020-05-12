@@ -1,6 +1,6 @@
 package com.example.springresttwitterable.entity.dto.user;
 
-import com.example.springresttwitterable.entity.Role;
+import com.example.springresttwitterable.entity.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.hibernate.validator.constraints.NotEmpty;

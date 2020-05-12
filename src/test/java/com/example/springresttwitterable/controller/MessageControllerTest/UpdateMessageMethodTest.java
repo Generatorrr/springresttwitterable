@@ -3,21 +3,19 @@ package com.example.springresttwitterable.controller.MessageControllerTest;
 import com.example.springresttwitterable.TestConstants;
 import com.example.springresttwitterable.controller.BaseControllerTest;
 import com.example.springresttwitterable.controller.MessageController;
-import com.example.springresttwitterable.entity.Message;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.message.ListMessageDTO;
 import com.example.springresttwitterable.entity.dto.message.MessageDTO;
-import com.example.springresttwitterable.entity.dto.message.NewMessageDTO;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.error.RestExceptionHandler;
 import com.example.springresttwitterable.repository.MessageRepository;
 import com.example.springresttwitterable.repository.UserRepository;
 import com.example.springresttwitterable.utils.TestDataHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -29,18 +27,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javassist.NotFoundException;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -48,7 +42,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -324,17 +317,17 @@ public class UpdateMessageMethodTest extends BaseControllerTest
 //        assertThat(changedMessage.getText(), is(changedText));
 //    }
 
-    @Test
-    public void putValidMessage() throws Exception {
-
-        messageControllerMvc.perform(
-                mvcMultipartBuilder
-                        .file("file", mockMultipartFile.getBytes())
-                        .param("id", messageForTest.getId().toString())
-                        .param("text", "Hello!!!:) Text has been changed.")
-                        .param("tag", messageForTest.getTag())
-                        .principal(authentication)
-        )
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    public void putValidMessage() throws Exception {
+//
+//        messageControllerMvc.perform(
+//                mvcMultipartBuilder
+//                        .file("file", mockMultipartFile.getBytes())
+//                        .param("id", messageForTest.getId().toString())
+//                        .param("text", "Hello!!!:) Text has been changed.")
+//                        .param("tag", messageForTest.getTag())
+//                        .principal(authentication)
+//        )
+//                .andExpect(status().isOk());
+//    }
 }

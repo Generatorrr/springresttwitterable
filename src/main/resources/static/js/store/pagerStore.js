@@ -1,6 +1,11 @@
 export default {
   state: {
-    pageInfo: null
+    pageInfo: {
+      totalPages: null,
+      totalDocs: null,
+      currentPage: 0,
+      pageSize: 10,
+    }
   },
   mutations: {
     setPageInfo(state, payload) {

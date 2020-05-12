@@ -4,7 +4,7 @@
       <div class="form-group col-md-6">
         <form class="form-inline">
           <input type="text" name="filter" placeholder="Search by tag"  v-model="filter"/>
-          <button v-on:click="getFilteredMessages()" class="btn btn-primary ml-2" type="submit">Search</button>
+          <button v-on:click="getFilteredMessages()" class="btn btn-primary ml-2" type="button">Search</button>
         </form>
       </div>
     </div>
@@ -44,7 +44,6 @@
         if (this.filter !== "") {
           this.$store.commit('setFilter', this.filter);
         }
-        debugger;
         axios
           .get(`${location.origin}/message?page=${this.pageInfo.currentPage}&filter=${this.filter}`)
           .then(response => {

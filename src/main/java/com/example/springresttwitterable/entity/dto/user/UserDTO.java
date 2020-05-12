@@ -1,7 +1,7 @@
 package com.example.springresttwitterable.entity.dto.user;
 
 import com.example.springresttwitterable.entity.Message;
-import com.example.springresttwitterable.entity.Role;
+import com.example.springresttwitterable.entity.enums.Role;
 import com.example.springresttwitterable.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

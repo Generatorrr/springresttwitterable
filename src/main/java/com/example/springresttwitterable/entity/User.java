@@ -1,5 +1,6 @@
 package com.example.springresttwitterable.entity;
 
+import com.example.springresttwitterable.entity.enums.Role;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,12 +28,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 @Entity
 @Table(name = "account")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Data
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class User implements Serializable
 {
 
