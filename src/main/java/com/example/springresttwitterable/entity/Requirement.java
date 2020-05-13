@@ -24,7 +24,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "requirement")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Requirement extends AuditableEntity implements Serializable {

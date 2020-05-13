@@ -27,7 +27,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "test_case")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TestCase extends AuditableEntity implements Serializable {

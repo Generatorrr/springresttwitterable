@@ -22,7 +22,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "check_list")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CheckList extends AuditableEntity implements Serializable {

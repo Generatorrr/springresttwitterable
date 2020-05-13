@@ -4,9 +4,11 @@ import com.example.springresttwitterable.entity.base.AuditableEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.envers.Audited;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +26,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "project")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Project extends AuditableEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)

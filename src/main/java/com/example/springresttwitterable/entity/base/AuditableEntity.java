@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
  */
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 @Data
 public abstract class AuditableEntity {
 

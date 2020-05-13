@@ -24,7 +24,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "module")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Module extends AuditableEntity implements Serializable {

@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "test_case_check_list")
-@Audited
 @Data
 public class TestCaseCheckList implements Serializable {
 

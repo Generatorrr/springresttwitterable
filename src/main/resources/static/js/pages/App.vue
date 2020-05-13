@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-app>
     <nav-bar :profile="profile"></nav-bar>
     <div class="container mt-5">
       <router-view></router-view>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>

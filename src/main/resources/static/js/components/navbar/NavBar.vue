@@ -20,7 +20,7 @@
                     <router-link class="nav-link" :to="`/user-messages/${profile.id}`">My messages</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
-                    <router-link class="nav-link" :to="`/projects/${profile.id}`">Проекты</router-link>
+                    <router-link class="nav-link" :to="`/projects/${profile.id}`">Projects</router-link>
                 </li>
             </ul>
             <div v-if="profile" class="navbar-text mr-3">{{profile.name}}</div>

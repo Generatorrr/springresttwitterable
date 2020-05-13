@@ -3,8 +3,10 @@ package com.example.springresttwitterable.controller;
 import com.example.springresttwitterable.entity.Project;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.PageDTO;
+import com.example.springresttwitterable.entity.dto.project.ListProjectDTO;
 import com.example.springresttwitterable.entity.dto.project.NewProjectDTO;
 import com.example.springresttwitterable.entity.dto.project.ProjectDTO;
+import com.example.springresttwitterable.entity.dto.project.UpdateProjectDTO;
 import com.example.springresttwitterable.entity.mapper.ProjectMapper;
 import com.example.springresttwitterable.repository.ProjectRepository;
 import com.example.springresttwitterable.service.ProjectService;
@@ -20,7 +22,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +40,7 @@ import javax.validation.Valid;
  */
 
 @RestController
-@Api(value="Project API", description="Operations with projects")
+@Api(value = "Project API", description = "Operations with projects")
 @RequestMapping("/project")
 public class ProjectController {
 
@@ -51,7 +56,7 @@ public class ProjectController {
 
     @GetMapping
     @ResponseBody
-    @ApiOperation(value = "Get messages", response = ProjectDTO.class)
+    @ApiOperation(value = "Get projects", response = ProjectDTO.class)
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Successfully return projects"),
         @ApiResponse(code = 403, message = "Forbidden")
@@ -59,7 +64,7 @@ public class ProjectController {
     )
     public ProjectDTO getMessages(
         @RequestParam(required = false, defaultValue = "") String filter,
-        @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable
+        @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
 
         final Page<Project> toResponse;
@@ -77,15 +82,35 @@ public class ProjectController {
         );
     }
 
+    @GetMapping("{id}")
+    @ResponseBody
+    @ApiOperation(value = "Get project by id", response = ListProjectDTO.class)
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successfully return project by id"),
+        @ApiResponse(code = 403, message = "Forbidden")
+    }
+    )
+    public ListProjectDTO getMessages(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+
+        return projectService.getById(id);
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Create new project", response = ResponseEntity.class)
-    public ResponseEntity createProject(@AuthenticationPrincipal User currentUser, @Valid NewProjectDTO newProjectDTO )
-    {
+    public ResponseEntity createProject(@AuthenticationPrincipal User currentUser, @RequestBody @Valid NewProjectDTO newProjectDTO) {
 
         Project project = projectMapper.fromNewProjectDTOToEntity(newProjectDTO);
         project.setProjectOwner(currentUser);
         projectRepository.save(project);
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Update project", response = ResponseEntity.class)
+    public ResponseEntity updateProject(@AuthenticationPrincipal User currentUser, @RequestBody @Valid UpdateProjectDTO updateProjectDTO) {
+
+        projectService.updateProject(updateProjectDTO);
         return ResponseEntity.ok().build();
     }
 }

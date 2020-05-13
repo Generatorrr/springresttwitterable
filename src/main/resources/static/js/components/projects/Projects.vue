@@ -1,11 +1,20 @@
 <template>
     <div>
-        <div class="form-row">
+        <div class="form-row flex-between">
             <div class="form-group col-md-6">
                 <form class="form-inline">
                     <input type="text" name="filter" placeholder="Поиск"  v-model="filter" />
-                    <button v-on:click="getFilteredProjects()" class="btn btn-primary ml-2" type="button">Найти</button>
+                    <button v-on:click="getFilteredProjects()" class="btn btn-primary ml-2" type="button">Search</button>
                 </form>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="flex_end">
+                    <form class="form-inline">
+                        <button v-on:click="getFilteredProjects()" class="btn btn-primary ml-2" type="button">
+                            <router-link :to="`/new-project`">Create new project</router-link>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -24,7 +33,14 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.initialDate }}</td>
                     <td>{{ item.endDate }}</td>
-                    <td>{{ item.moduleCount }}</td>
+                    <td>
+                        <div class="flex-between">
+                            <p>{{ item.moduleCount }}</p>
+                            <router-link class="edit-link-pencil"
+                                         :to="{ path: `/edit-project/${item.id}` }"
+                                         tag="img" src="/static/assets/edit.svg"></router-link>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </template>
@@ -84,6 +100,6 @@
     }
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

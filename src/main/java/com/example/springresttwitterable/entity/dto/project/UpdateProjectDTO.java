@@ -19,7 +19,10 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NewProjectDTO implements Serializable {
+public class UpdateProjectDTO implements Serializable {
+
+    @NotNull
+    private Long id;
 
     @NotBlank(message = "Please, fill name field")
     @Length(max = 255, message = "Name is too long, max 255 chars")

@@ -25,7 +25,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "task")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Task extends AuditableEntity implements Serializable {

@@ -36,7 +36,6 @@ import org.hibernate.envers.RelationTargetAuditMode;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Data
-@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class User implements Serializable
 {
 

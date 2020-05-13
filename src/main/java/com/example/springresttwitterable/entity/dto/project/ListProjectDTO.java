@@ -1,5 +1,6 @@
 package com.example.springresttwitterable.entity.dto.project;
 
+import com.example.springresttwitterable.entity.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,9 @@ public class ListProjectDTO implements Serializable {
 
     private Long id;
     private String name;
+    private String description;
     private LocalDateTime initialDate;
     private LocalDateTime endDate;
+    private Status status;
     private int moduleCount;
 }

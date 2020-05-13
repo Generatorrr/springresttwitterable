@@ -21,7 +21,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "test_plan")
-@Audited
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TestPlan extends AuditableEntity implements Serializable {

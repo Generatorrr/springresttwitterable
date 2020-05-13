@@ -3,6 +3,7 @@ package com.example.springresttwitterable.entity.mapper;
 import com.example.springresttwitterable.entity.Project;
 import com.example.springresttwitterable.entity.dto.project.ListProjectDTO;
 import com.example.springresttwitterable.entity.dto.project.NewProjectDTO;
+import com.example.springresttwitterable.entity.dto.project.UpdateProjectDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -32,4 +33,11 @@ public interface ProjectMapper {
     Project fromNewProjectDTOToEntity(NewProjectDTO newProjectDTO);
 
     List<ListProjectDTO> convertToList(Page<Project> projects);
+
+    default void updateEntityWithDTO(UpdateProjectDTO dto, Project entity) {
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setInitialDate(dto.getInitialDate());
+        entity.setEndDate(dto.getEndDate());
+    }
 }
