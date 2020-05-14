@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -25,7 +26,6 @@ import java.util.Set;
 @Entity
 @Table(name = "module")
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class Module extends AuditableEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,4 +37,32 @@ public class Module extends AuditableEntity implements Serializable {
 
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Requirement> requirements = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Module)) return false;
+        if (!super.equals(o)) return false;
+        Module module = (Module) o;
+        return getProject().equals(module.getProject());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getProject());
+    }
+
+    @Override
+    public String toString() {
+        return "Module{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", initialDate=" + initialDate +
+            ", endDate=" + endDate +
+            ", createdOn=" + createdOn +
+            ", updatedOn=" + updatedOn +
+            ", status=" + status +
+            '}';
+    }
 }

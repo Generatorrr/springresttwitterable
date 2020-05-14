@@ -18,6 +18,7 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Created on 2020-05-12
@@ -61,4 +62,32 @@ public class TestCaseCheckList implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "updated_by")
     protected User updatedBy;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestCaseCheckList)) return false;
+        TestCaseCheckList that = (TestCaseCheckList) o;
+        return getId().equals(that.getId()) &&
+            getTestCaseOrder().equals(that.getTestCaseOrder()) &&
+            getCreatedOn().equals(that.getCreatedOn()) &&
+            getUpdatedOn().equals(that.getUpdatedOn());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTestCaseOrder(), getCreatedOn(), getUpdatedOn());
+    }
+
+    @Override
+    public String toString() {
+        return "TestCaseCheckList{" +
+            "id=" + id +
+            ", testCase=" + testCase +
+            ", checkList=" + checkList +
+            ", testCaseOrder=" + testCaseOrder +
+            ", createdOn=" + createdOn +
+            ", updatedOn=" + updatedOn +
+            '}';
+    }
 }

@@ -23,12 +23,15 @@
                     <router-link class="nav-link" :to="`/projects/${profile.id}`">Projects</router-link>
                 </li>
             </ul>
+<!--            <div v-if="profile" class="user-block-item">-->
+<!--                <img :src="`${profile.userpic}`" alt="User's avatar"/>-->
+<!--            </div>-->
             <div v-if="profile" class="navbar-text mr-3">{{profile.name}}</div>
             <div v-if="profile">
-                <a class="btn btn-primary" href="/logout">Log Out</a>
+                <a class="btn btn-primary color-white" href="/logout"><i class="fas fa-toggle-off"></i></a>
             </div>
             <div v-else>
-                <a class="btn btn-primary" href="/login">Sign In</a>
+                <a class="btn btn-primary color-white" href="/login"><i class="fas fa-toggle-on"></i></a>
             </div>
         </div>
     </nav>
@@ -44,6 +47,6 @@
     }
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

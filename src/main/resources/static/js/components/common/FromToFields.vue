@@ -26,6 +26,7 @@
                             no-title
                             @input="fromDateMenu = false"
                             :min="minDateFromPicker"
+                            :max="maxDateFromPicker()"
                     ></v-date-picker>
                 </v-menu>
             </v-col>
@@ -79,7 +80,7 @@
                 toDate: null,
                 minDateFromPicker: new Date().toISOString().substr(0, 10),
                 minDateToPicker: () => this.fromDate,
-                maxDate: null,
+                maxDateFromPicker: () => this.toDate,
             }
         },
         watch: {

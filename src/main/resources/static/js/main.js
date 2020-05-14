@@ -16,6 +16,11 @@ import Profile from 'components/profile/Profile.vue'
 import UserMessages from 'components/messages/UserMessages.vue'
 import Projects from "components/projects/Projects.vue";
 import NewEditProject from "./components/projects/NewEditProject.vue";
+import NewEditModule from "./components/modules/NewEditModule.vue";
+import Project from "./components/projects/Project.vue";
+import Module from "./components/modules/Module.vue";
+import NewEditTestPlan from "./components/testplan/NewEditTestPlan.vue";
+import NewEditRequirement from "./components/requirement/NewEditRequirement.vue";
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -29,6 +34,14 @@ const routes = [
     { path: '/projects/:id', component: Projects, props: true },
     { path: '/new-project', component: NewEditProject, props: true },
     { path: '/edit-project/:id', component: NewEditProject, props: true },
+    { path: '/view-project/:id', component: Project, props: true },
+    { path: '/new-module/:projectId', component: NewEditModule, props: true },
+    { path: '/edit-module/:projectId/:id', component: NewEditModule, props: true },
+    { path: '/view-module/:id', component: Module, props: true },
+    { path: '/new-test-plan/:parentId', component: NewEditTestPlan, props: true },
+    { path: '/edit-test-plan/:parentId/:id', component: NewEditTestPlan, props: true },
+    { path: '/new-requirement/:parentId', component: NewEditRequirement, props: true },
+    { path: '/edit-requirement/:parentId/:id', component: NewEditRequirement, props: true },
 ];
 
 const router = new VueRouter({

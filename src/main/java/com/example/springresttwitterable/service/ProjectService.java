@@ -1,10 +1,13 @@
 package com.example.springresttwitterable.service;
 
 import com.example.springresttwitterable.entity.Project;
+import com.example.springresttwitterable.entity.User;
+import com.example.springresttwitterable.entity.dto.project.FullProjectDTO;
 import com.example.springresttwitterable.entity.dto.project.ListProjectDTO;
 import com.example.springresttwitterable.entity.dto.project.UpdateProjectDTO;
 import com.example.springresttwitterable.entity.mapper.ProjectMapper;
 import com.example.springresttwitterable.repository.ProjectRepository;
+import com.example.springresttwitterable.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,11 +21,13 @@ import java.util.Optional;
 @Service
 public class ProjectService {
 
-    private ProjectRepository projectRepository;
-    private ProjectMapper projectMapper;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
+    private final ProjectMapper projectMapper;
 
-    public ProjectService(ProjectRepository projectRepository, ProjectMapper projectMapper) {
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, ProjectMapper projectMapper) {
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
         this.projectMapper = projectMapper;
     }
 
@@ -37,5 +42,37 @@ public class ProjectService {
 
         Project project = projectRepository.findById(id).orElseThrow();
         return projectMapper.fromEntityToListProjectDTO(project);
+    }
+
+    public FullProjectDTO getByFullProjectDTOById(Long id) {
+
+        Project project = projectRepository.findById(id).orElseThrow();
+        return projectMapper.fromEntityToFullProjectDTO(project);
+    }
+
+    public void assignToProject(Long id, String userId) {
+
+        Project project = projectRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
+
+        if (project.getUsers().contains(user)) {
+            throw new RuntimeException();
+        }
+
+        project.getUsers().add(user);
+        projectRepository.save(project);
+    }
+
+    public void detachFromProject(Long id, String userId) {
+
+        Project project = projectRepository.findById(id).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
+
+        if (!project.getUsers().contains(user)) {
+            throw new RuntimeException();
+        }
+
+        project.getUsers().remove(user);
+        projectRepository.save(project);
     }
 }

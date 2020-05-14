@@ -2,13 +2,31 @@
   display: flex;
   justify-content: space-between;
 }
-.flex_end {
+
+.flex-end {
   display: flex;
   justify-content: flex-end;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.margin-bottom-30 {
+  margin-bottom: 30px;
 }
 
 .edit-link-pencil {
   width: 5%;
   height: 5%;
   cursor: pointer;
+}
+
+.table-item__cursor-pointer {
+  cursor: pointer;
+}
+
+.color-white {
+  color: white!important;
 }

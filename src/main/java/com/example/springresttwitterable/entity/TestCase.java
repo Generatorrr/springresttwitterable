@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,7 +29,6 @@ import java.util.Set;
 @Entity
 @Table(name = "test_case")
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class TestCase extends AuditableEntity implements Serializable {
 
     @Column(name = "test_case")
@@ -48,4 +48,34 @@ public class TestCase extends AuditableEntity implements Serializable {
         orphanRemoval = true
     )
     private Set<TestCaseCheckList> checkLists = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestCase)) return false;
+        if (!super.equals(o)) return false;
+        TestCase testCase1 = (TestCase) o;
+        return getTestCase().equals(testCase1.getTestCase()) &&
+            getRequirement().equals(testCase1.getRequirement());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTestCase(), getRequirement());
+    }
+
+    @Override
+    public String toString() {
+        return "TestCase{" +
+            "testCase='" + testCase + '\'' +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", initialDate=" + initialDate +
+            ", endDate=" + endDate +
+            ", createdOn=" + createdOn +
+            ", updatedOn=" + updatedOn +
+            ", status=" + status +
+            '}';
+    }
 }

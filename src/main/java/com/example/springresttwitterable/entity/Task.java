@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created on 2020-05-12
@@ -26,7 +27,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "task")
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class Task extends AuditableEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
@@ -40,4 +40,35 @@ public class Task extends AuditableEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "test_case_id")
     private TestCase testCase;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Task)) return false;
+        if (!super.equals(o)) return false;
+        Task task = (Task) o;
+        return getTaskType() == task.getTaskType() &&
+            getSeverity() == task.getSeverity();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTaskType(), getSeverity());
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+            "taskType=" + taskType +
+            ", severity=" + severity +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", initialDate=" + initialDate +
+            ", endDate=" + endDate +
+            ", createdOn=" + createdOn +
+            ", updatedOn=" + updatedOn +
+            ", status=" + status +
+            '}';
+    }
 }

@@ -11,8 +11,8 @@
                 </div>
             </v-col>
         </v-row>
-        <create-edit-entity-name :name-for-update="project !== null ? project.name : null"
-                                 entity-name="Project Name"></create-edit-entity-name>
+        <create-edit-entity-text-field :name-for-update="project !== null ? project.name : null" store-update-method="setName"
+                                 entity-name="Project Name"></create-edit-entity-text-field>
         <create-edit-entity-description :description-for-update="project !== null ? project.description : null"
                                         entity-name="Project Description"></create-edit-entity-description>
         <from-to-fields :from-date-for-update="project !== null ? project.initialDate.substring(0, 10) : null"
@@ -24,24 +24,21 @@
 <script>
     import axios from 'axios'
     import FromToFields from "../common/FromToFields.vue";
-    import CreateEditEntityName from "../common/CreateEditEntityName.vue";
+    import CreateEditEntityTextField from "../common/CreateEditEntityTextField.vue";
     import CreateEditEntityDescription from "../common/CreateEditEntityDescription.vue";
     import constants from "../../constants";
 
     export default {
-        components: {FromToFields, CreateEditEntityName, CreateEditEntityDescription},
+        components: {FromToFields, CreateEditEntityTextField, CreateEditEntityDescription},
         computed: {
             profile() {
                 return this.$store.getters.getProfile;
             },
-            project() {
-                if (this.$attrs.id) {
-
-                }
-            },
         },
         mounted() {
-            this.getProjectForEdit()
+            if (this.$attrs.id) {
+                this.getProjectForEdit()
+            }
         },
         watch: {},
         data() {

@@ -59,57 +59,6 @@ public class UserController {
         return new ResponseEntity<>(userMapper.convertToUserForAdminDTO(userService.findAll()), HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "Get specific user", response = HTMLDocument.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = ""),
-//            @ApiResponse(code = 400, message = "Bad request"),
-//            @ApiResponse(code = 403, message = "Forbidden")
-//        }
-//    )
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    @GetMapping("{user}")
-//    public String getUserEditForm(@PathVariable User user, Model model) {
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("roles", Role.values());
-//        return "userEdit";
-//    }
-
-//    @ApiOperation(value = "Change user data", response = HTMLDocument.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = ""),
-//            @ApiResponse(code = 400, message = "Bad request"),
-//            @ApiResponse(code = 403, message = "Forbidden")
-//        }
-//    )
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    @PostMapping
-//    public String saveUser(
-//            @RequestParam String username,
-//            @RequestParam Map<String, String> form,
-//            @RequestParam("userId") User user
-//    ) {
-//
-//        userService.saveUser(username, form, user);
-//
-//        return "redirect:/user";
-//    }
-
-//    @ApiOperation(value = "Get yourself profile", response = HTMLDocument.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = ""),
-//            @ApiResponse(code = 400, message = "Bad request"),
-//            @ApiResponse(code = 403, message = "Forbidden")
-//        }
-//    )
-//    @GetMapping("profile")
-//    public String getProfile(Model model, @AuthenticationPrincipal User user) {
-//
-//        model.addAttribute("username", user.getName());
-//        model.addAttribute("email", user.getEmail());
-//        return "profile";
-//    }
-
     @ApiOperation(value = "Update your profile", response = HTMLDocument.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = ""),
@@ -160,4 +109,55 @@ public class UserController {
 
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+//    @ApiOperation(value = "Get specific user", response = HTMLDocument.class)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = ""),
+//            @ApiResponse(code = 400, message = "Bad request"),
+//            @ApiResponse(code = 403, message = "Forbidden")
+//        }
+//    )
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @GetMapping("{user}")
+//    public String getUserEditForm(@PathVariable User user, Model model) {
+//
+//        model.addAttribute("user", user);
+//        model.addAttribute("roles", Role.values());
+//        return "userEdit";
+//    }
+
+//    @ApiOperation(value = "Change user data", response = HTMLDocument.class)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = ""),
+//            @ApiResponse(code = 400, message = "Bad request"),
+//            @ApiResponse(code = 403, message = "Forbidden")
+//        }
+//    )
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    @PostMapping
+//    public String saveUser(
+//            @RequestParam String username,
+//            @RequestParam Map<String, String> form,
+//            @RequestParam("userId") User user
+//    ) {
+//
+//        userService.saveUser(username, form, user);
+//
+//        return "redirect:/user";
+//    }
+
+//    @ApiOperation(value = "Get yourself profile", response = HTMLDocument.class)
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = ""),
+//            @ApiResponse(code = 400, message = "Bad request"),
+//            @ApiResponse(code = 403, message = "Forbidden")
+//        }
+//    )
+//    @GetMapping("profile")
+//    public String getProfile(Model model, @AuthenticationPrincipal User user) {
+//
+//        model.addAttribute("username", user.getName());
+//        model.addAttribute("email", user.getEmail());
+//        return "profile";
+//    }
 }

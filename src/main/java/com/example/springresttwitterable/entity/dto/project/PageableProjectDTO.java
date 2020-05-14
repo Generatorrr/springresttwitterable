@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ProjectDTO implements Serializable {
+public class PageableProjectDTO implements Serializable {
 
     List<ListProjectDTO> projects;
     PageDTO page;

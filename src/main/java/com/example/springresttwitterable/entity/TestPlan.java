@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created on 2020-05-12
@@ -22,7 +23,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "test_plan")
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class TestPlan extends AuditableEntity implements Serializable {
 
     @Column(name = "test_method")
@@ -31,4 +31,34 @@ public class TestPlan extends AuditableEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "module_id")
     private Module module;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TestPlan)) return false;
+        if (!super.equals(o)) return false;
+        TestPlan testPlan = (TestPlan) o;
+        return getTestMethod().equals(testPlan.getTestMethod()) &&
+            getModule().equals(testPlan.getModule());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTestMethod(), getModule());
+    }
+
+    @Override
+    public String toString() {
+        return "TestPlan{" +
+            "testMethod='" + testMethod + '\'' +
+            ", id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", initialDate=" + initialDate +
+            ", endDate=" + endDate +
+            ", createdOn=" + createdOn +
+            ", updatedOn=" + updatedOn +
+            ", status=" + status +
+            '}';
+    }
 }

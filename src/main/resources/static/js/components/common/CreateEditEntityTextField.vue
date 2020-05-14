@@ -15,7 +15,7 @@
 <script>
     import constants from "../../constants";
     export default {
-        props: [ 'entityName', 'nameForUpdate' ],
+        props: [ 'entityName', 'nameForUpdate', 'storeUpdateMethod' ],
         components: {},
         computed: {
         },
@@ -35,12 +35,12 @@
 
                 for (let i = 0; i < this.rules.length; i++) {
                     if (this.rules[i](to) !== true) {
-                        this.$store.commit('setName', null);
+                        this.$store.commit(this.storeUpdateMethod, null);
                         this.$parent.checkForDisable();
                         return;
                     }
                 }
-                this.$store.commit('setName', to);
+                this.$store.commit(this.storeUpdateMethod, to);
                 this.$parent.checkForDisable();
             },
             nameForUpdate: function (to, from) {

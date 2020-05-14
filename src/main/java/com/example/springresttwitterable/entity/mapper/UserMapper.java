@@ -3,10 +3,12 @@ package com.example.springresttwitterable.entity.mapper;
 import com.example.springresttwitterable.entity.User;
 import com.example.springresttwitterable.entity.dto.user.InitialUserDTO;
 import com.example.springresttwitterable.entity.dto.user.UserAuthorDTO;
+import com.example.springresttwitterable.entity.dto.user.UserDTO;
 import com.example.springresttwitterable.entity.dto.user.UserForAdminDTO;
 import com.example.springresttwitterable.entity.dto.user.UserSubscribDTO;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -23,14 +25,13 @@ import java.util.Set;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {MessageMapper.class})
 public interface UserMapper
 {
-    
     InitialUserDTO convertToInitialUserDTO(User user);
-    
     UserAuthorDTO convertToAuthorDTO(User user);
-    
     UserSubscribDTO convertToUserSubscribDTO(User user);
-    Set<UserSubscribDTO> convertToUserSubscribDTO(Set<User> user);
-    
     UserForAdminDTO convertToUserForAdminDTO(User user);
+    UserDTO fromEntityToUserDTO(User user);
+
+    Set<UserSubscribDTO> convertToUserSubscribDTO(Set<User> user);
     List<UserForAdminDTO> convertToUserForAdminDTO(List<User> users);
+    Set<UserDTO> toUserDTOSet(Set<User> entities);
 }

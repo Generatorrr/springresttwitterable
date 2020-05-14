@@ -8,10 +8,10 @@
                 </form>
             </div>
             <div class="form-group col-md-6">
-                <div class="flex_end">
+                <div class="flex-end">
                     <form class="form-inline">
-                        <button v-on:click="getFilteredProjects()" class="btn btn-primary ml-2" type="button">
-                            <router-link :to="`/new-project`">Create new project</router-link>
+                        <button class="btn btn-primary ml-2" type="button">
+                            <router-link class="color-white" :to="`/new-project`">Create new project</router-link>
                         </button>
                     </form>
                 </div>
@@ -29,8 +29,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in projects" :key="item.name">
-                    <td>{{ item.name }}</td>
+                <tr v-for="item in projects" :key="item.name" class="table-item__cursor-pointer">
+                    <td v-on:click="viewProject(item.id)">{{ item.name }}</td>
                     <td>{{ item.initialDate }}</td>
                     <td>{{ item.endDate }}</td>
                     <td>
@@ -95,6 +95,9 @@
                         this.$store.commit('setProjects', response.data.projects);
                         this.projects = response.data.projects;
                     });
+            },
+            viewProject(id) {
+                return this.$router.push({ path: `/view-project/${id}` });
             }
         }
     }

@@ -30,18 +30,11 @@ public class UserDTO implements Serializable
     private String email;
 
     private String userpic;
-
     private String gender;
-
     private Set<Role> roles;
-
     private String locale;
-    
     private LocalDateTime lastVisit;
-    
     Set<Message> messages;
-    
     private Set<User> subscribtions;
-    
     private Set<User> subscribers;
 }

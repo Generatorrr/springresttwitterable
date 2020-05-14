@@ -1,7 +1,7 @@
 create table project
 (
     id            int8          not null,
-    name          varchar(255)  not null,
+    name          varchar(255)  not null unique,
     description   varchar(2000) not null,
     status        varchar(20)   not null,
     init_date     timestamp     not null,
