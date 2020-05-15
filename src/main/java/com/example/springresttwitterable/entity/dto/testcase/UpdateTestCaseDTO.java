@@ -44,9 +44,6 @@ public class UpdateTestCaseDTO implements Serializable {
     private LocalDateTime endDate;
 
     @NotNull
-    private Long moduleId;
-
-    @NotNull
     private String testCase;
 
     @NotNull

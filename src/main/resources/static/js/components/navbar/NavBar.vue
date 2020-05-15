@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Twitterable</a>
+        <a class="navbar-brand" href="/">Test Control Application</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,17 +10,17 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/">Home</router-link>
                 </li>
-                <li v-if="profile && profile.roles.indexOf('ADMIN') !== -1" class="nav-item">
-                    <a class="nav-link" href="/user">User List</a>
+                <li v-if="profile" class="nav-item">
+                    <router-link class="nav-link" :to="`/projects/${profile.id}`">Projects</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
                     <router-link class="nav-link" to="/user/profile">Profile</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
-                    <router-link class="nav-link" :to="`/user-messages/${profile.id}`">My messages</router-link>
+                    <router-link class="nav-link" to="/users">User List</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
-                    <router-link class="nav-link" :to="`/projects/${profile.id}`">Projects</router-link>
+                    <router-link class="nav-link" :to="`/user-messages/${profile.id}`">My messages</router-link>
                 </li>
             </ul>
 <!--            <div v-if="profile" class="user-block-item">-->

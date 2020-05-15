@@ -15,7 +15,6 @@ import com.example.springresttwitterable.entity.dto.message.UpdateMessageDTO;
 import com.example.springresttwitterable.entity.mapper.MessageMapper;
 import com.example.springresttwitterable.entity.mapper.UserMapper;
 import com.example.springresttwitterable.repository.MessageRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -26,7 +25,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,18 +35,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
-
-import javax.swing.text.html.HTMLDocument;
-import javax.validation.Valid;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * Controller for work with {@link Message} entity.
@@ -59,7 +50,6 @@ import io.swagger.annotations.ApiResponses;
  */
 
 @RestController
-@Api(value="Message API", description="Operations with messages")
 @RequestMapping("/message")
 public class MessageController
 {
@@ -81,12 +71,6 @@ public class MessageController
 
     @GetMapping
     @ResponseBody
-    @ApiOperation(value = "Get messages", response = HTMLDocument.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully return messages"),
-            @ApiResponse(code = 403, message = "Forbidden")
-            }
-    )
     public MessageDTO getMessages(
             @RequestParam(required = false, defaultValue = "") String filter,
             @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable

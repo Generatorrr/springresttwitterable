@@ -29,6 +29,7 @@ public interface TestPlanMapper {
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "module", ignore = true)
+    @Mapping(target = "users", ignore = true)
     TestPlan fromNewTestPlanDTOToEntity(NewTestPlanDTO dto);
 
     @Mapping(target = "moduleId", source = "module.id")

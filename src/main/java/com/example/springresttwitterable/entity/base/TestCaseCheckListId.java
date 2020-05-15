@@ -22,11 +22,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TestCaseCheckListId implements Serializable {
 
-    @Column(name = "test_case_id")
+    @Column(name = "test_case_id", nullable = false)
     @EqualsAndHashCode.Include
     private Long testCaseId;
 
-    @Column(name = "check_list_id")
+    @Column(name = "check_list_id", nullable = false)
     @EqualsAndHashCode.Include
     private Long checkListId;
 }

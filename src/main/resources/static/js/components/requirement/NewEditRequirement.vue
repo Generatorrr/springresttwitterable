@@ -15,8 +15,9 @@
                                        entity-name="Requirement Name"></create-edit-entity-text-field>
         <create-edit-entity-description :description-for-update="requirement !== null ? requirement.description : null"
                                         entity-name="Requirement Description"></create-edit-entity-description>
-        <create-edit-entity-status entity-name="Requirement Status"
-                                   :status-for-update="requirement !== null ? requirement.status : null"></create-edit-entity-status>
+        <create-edit-entity-select-field entity-name="Requirement Status"
+                                         :pre-selected-value-for-update="requirement !== null ? requirement.status : null"
+                                         store-update-method="setStatus" :items-for-update="statusValues"></create-edit-entity-select-field>
         <from-to-fields :from-date-for-update="requirement !== null ? requirement.initialDate.substring(0, 10) : null"
                         :to-date-for-update="requirement !== null ? requirement.endDate.substring(0, 10) : null"></from-to-fields>
 
@@ -28,20 +29,22 @@
     import FromToFields from "../common/FromToFields.vue";
     import CreateEditEntityTextField from "../common/CreateEditEntityTextField.vue";
     import CreateEditEntityDescription from "../common/CreateEditEntityDescription.vue";
-    import CreateEditEntityStatus from "../common/CreateEditEntityStatus.vue";
+    import CreateEditEntitySelectField from "../common/CreateEditEntitySelectField.vue";
     import constants from "../../constants";
 
     export default {
-        components: {FromToFields, CreateEditEntityTextField, CreateEditEntityDescription, CreateEditEntityStatus},
+        components: {FromToFields, CreateEditEntityTextField, CreateEditEntityDescription, CreateEditEntitySelectField},
         computed: {},
         mounted() {
             if (this.$attrs.id) {
                 this.getEntityForEdit()
             }
+            this.statusValues = constants.STATUS_VALUES;
         },
         watch: {},
         data() {
             return {
+                statusValues: null,
                 disableSave: true,
                 requirement: null
             }

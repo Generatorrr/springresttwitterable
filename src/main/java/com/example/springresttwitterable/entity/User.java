@@ -89,9 +89,23 @@ public class User implements Serializable
     )
     private Set<User> subscribers = new HashSet<>();
 
-
     @ManyToMany(mappedBy = "users")
     private Set<Project> projects = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Module> modules = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Requirement> requirements = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<TestPlan> testPlans = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Task> tasks = new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    private Set<CheckList> checkLists = new HashSet<>();
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);

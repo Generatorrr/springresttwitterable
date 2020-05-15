@@ -1,20 +1,12 @@
 package com.example.springresttwitterable.controller;
 
 import com.example.springresttwitterable.entity.Requirement;
-import com.example.springresttwitterable.entity.TestPlan;
 import com.example.springresttwitterable.entity.User;
+import com.example.springresttwitterable.entity.dto.requirement.FullRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.ListRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.NewRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.UpdateRequirementDTO;
-import com.example.springresttwitterable.entity.dto.testplan.ListTestPlanDTO;
-import com.example.springresttwitterable.entity.dto.testplan.NewTestPlanDTO;
-import com.example.springresttwitterable.entity.dto.testplan.UpdateTestPlanDTO;
 import com.example.springresttwitterable.service.RequirementService;
-import com.example.springresttwitterable.service.TestPlanService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,7 +29,6 @@ import javax.validation.Valid;
  */
 
 @RestController
-@Api(value = "Requirement API", description = "Operations with requirements")
 @RequestMapping("/requirement")
 public class RequirementController {
 
@@ -49,19 +40,19 @@ public class RequirementController {
 
     @GetMapping("{id}")
     @ResponseBody
-    @ApiOperation(value = "Get by id", response = ListRequirementDTO.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully return ListModuleDTO by id"),
-        @ApiResponse(code = 403, message = "Forbidden")
-    }
-    )
     public ListRequirementDTO getById(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
 
         return requirementService.getById(id);
     }
 
+    @GetMapping("{id}/full")
+    @ResponseBody
+    public FullRequirementDTO getFullById(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+
+        return requirementService.getByFullModuleDTOById(id);
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Create new requirement", response = ResponseEntity.class)
     public ResponseEntity create(@AuthenticationPrincipal User currentUser, @RequestBody @Valid NewRequirementDTO dto) {
 
         Requirement newEntity = requirementService.create(dto);
@@ -69,7 +60,6 @@ public class RequirementController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Update requirement", response = ResponseEntity.class)
     public ResponseEntity update(@AuthenticationPrincipal User currentUser, @RequestBody @Valid UpdateRequirementDTO dto) {
 
         requirementService.update(dto);
@@ -77,10 +67,25 @@ public class RequirementController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation(value = "Delete requirement by id", response = ResponseEntity.class)
     public ResponseEntity delete(@AuthenticationPrincipal User currentUser, @PathVariable Long id) {
 
         requirementService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("{id}/assign/{userId}")
+    public ResponseEntity assignTo(@AuthenticationPrincipal User currentUser, @PathVariable Long id, @PathVariable String userId) {
+
+        requirementService.assignTo(id, userId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    @PutMapping("{id}/unassign/{userId}")
+    public ResponseEntity detachFrom(@AuthenticationPrincipal User currentUser, @PathVariable Long id, @PathVariable String userId) {
+
+        requirementService.detachFrom(id, userId);
         return ResponseEntity.ok().build();
     }
 }

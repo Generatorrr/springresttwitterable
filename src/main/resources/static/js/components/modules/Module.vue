@@ -7,6 +7,15 @@
                 <p>Initial Date: {{module.initialDate}}</p>
                 <p>End Date: {{module.endDate}}</p>
             </div>
+            <div class="form-group col-md-3">
+                <div class="flex-start">
+                    <h5>Employees</h5>
+                    <button v-on:click="openEmployeesModal" class="btn btn-primary ml-2" type="button">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <p v-for="user in module.users" :key="user.name">{{user.name}}</p>
+            </div>
         </div>
         <div class="form-row flex-column margin-bottom-30">
             <div class="flex-start">
@@ -19,7 +28,7 @@
                 <template v-slot:default>
                     <thead>
                     <tr>
-                        <th class="text-left">Test Plan</th>
+                        <th class="text-left">Name</th>
                         <th class="text-left">Test Method</th>
                         <th class="text-left">Initial Date</th>
                         <th class="text-left">End Date</th>
@@ -50,7 +59,7 @@
                 </template>
             </v-simple-table>
         </div>
-        <div class="form-row flex-column">
+        <div class="form-row flex-column margin-bottom-30">
             <div class="flex-start">
                 <h5>Requirements</h5>
                 <button class="btn btn-primary ml-2" type="button">
@@ -61,7 +70,7 @@
                 <template v-slot:default>
                     <thead>
                     <tr>
-                        <th class="text-left">Requirement</th>
+                        <th class="text-left">Name</th>
                         <th class="text-left">Initial Date</th>
                         <th class="text-left">End Date</th>
                         <th class="text-left">Status</th>
@@ -69,7 +78,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in module.requirements" :key="item.name" class="table-item__cursor-pointer">
-                        <td>{{ item.name }}</td>
+                        <td v-on:click="viewRequirement(item.id)">{{ item.name }}</td>
                         <td>{{ item.initialDate }}</td>
                         <td>{{ item.endDate }}</td>
                         <td>{{ item.status }}</td>
@@ -90,6 +99,47 @@
                 </template>
             </v-simple-table>
         </div>
+        <div class="form-row flex-column">
+            <div class="flex-start">
+                <h5>Check Lists</h5>
+                <button class="btn btn-primary ml-2" type="button">
+                    <router-link class="color-white" :to="`/new-check-list/${module.id}`"><i class="fas fa-plus"></i></router-link>
+                </button>
+            </div>
+            <v-simple-table>
+                <template v-slot:default>
+                    <thead>
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th class="text-left">Initial Date</th>
+                        <th class="text-left">End Date</th>
+                        <th class="text-left">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in module.checkLists" :key="item.name" class="table-item__cursor-pointer">
+                        <td v-on:click="viewCheckList(item.id)">{{ item.name }}</td>
+                        <td>{{ item.initialDate }}</td>
+                        <td>{{ item.endDate }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>
+                            <div class="flex-end">
+                                <button class="btn btn-primary ml-2" type="button">
+                                    <router-link class="color-white" :to="`/edit-check-list/${module.id}/${item.id}`">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </router-link>
+                                </button>
+                                <button v-on:click="deleteCheckList(item.id)" class="btn btn-primary ml-2" type="button">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </template>
+            </v-simple-table>
+        </div>
+        <employees-modal url="module" :users="users" :entity="module" v-show="isModalVisible" @close="closeEmployeesModal"></employees-modal>
     </div>
 </template>
 
@@ -119,7 +169,7 @@
             },
         },
         mounted() {
-            // this.getAllUsers();
+            this.getAllUsers();
         },
         data() {
             return {
@@ -134,8 +184,11 @@
             }
         },
         methods: {
-            viewTestMethod(id) {
-                return this.$router.push({ path: `/view-module/${id}` });
+            viewRequirement(id) {
+                return this.$router.push({ path: `/view-requirement/${id}` });
+            },
+            viewCheckList(id) {
+                return this.$router.push({ path: `/view-check-list/${id}` });
             },
             setModule(module) {
                 this.$store.commit('setFullModule', module);
@@ -184,6 +237,16 @@
                         const deletedIndex = this.module.requirements.map(item => item.id).indexOf(id);
                         if (deletedIndex > -1) {
                             this.module.requirements.splice(deletedIndex, 1);
+                        }
+                    });
+            },
+            deleteCheckList(id) {
+                return axios
+                    .delete(`${location.origin}/check-list/${id}`)
+                    .then(response => {
+                        const deletedIndex = this.module.checkLists.map(item => item.id).indexOf(id);
+                        if (deletedIndex > -1) {
+                            this.module.checkLists.splice(deletedIndex, 1);
                         }
                     });
             },

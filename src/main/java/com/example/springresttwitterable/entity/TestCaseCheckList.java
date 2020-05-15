@@ -1,6 +1,7 @@
 package com.example.springresttwitterable.entity;
 
 import com.example.springresttwitterable.entity.base.TestCaseCheckListId;
+import com.example.springresttwitterable.entity.enums.Status;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,10 +12,13 @@ import org.springframework.data.annotation.LastModifiedBy;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -33,6 +37,16 @@ public class TestCaseCheckList implements Serializable {
 
     @EmbeddedId
     private TestCaseCheckListId id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("test_case_id")
@@ -62,6 +76,16 @@ public class TestCaseCheckList implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "updated_by")
     protected User updatedBy;
+
+    @PrePersist
+    private void prePersist() {
+        if (null == getId()) {
+            TestCaseCheckListId pk = new TestCaseCheckListId();
+            pk.setCheckListId(getCheckList().getId());
+            pk.setTestCaseId(getTestCase().getId());
+            setId(pk);
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

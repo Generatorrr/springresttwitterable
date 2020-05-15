@@ -15,7 +15,7 @@
 <script>
 
     export default {
-        props: [ 'entityName', 'statusForUpdate' ],
+        props: [ 'entityName', 'preSelectedValueForUpdate', 'itemsForUpdate', 'storeUpdateMethod' ],
         components: {},
         computed: {
         },
@@ -23,18 +23,20 @@
         },
         data() {
             return {
-                items: [ 'TO_DO', 'IN_PROGRESS', 'IN_ANALYSIS', 'NEED_CLARIFY', 'READY_FOR_QA', 'IN_TEST', 'DONE', 'CANCELLED' ],
+                items: [],
                 selectedValue: null
             }
         },
         watch: {
             selectedValue: function (to, from) {
-
-                this.$store.commit('setStatus', to);
+                this.$store.commit(this.storeUpdateMethod, to);
                 this.$parent.checkForDisable();
             },
-            statusForUpdate: function (to, from) {
+            preSelectedValueForUpdate: function (to, from) {
                 this.selectedValue = to;
+            },
+            itemsForUpdate: function (to, from) {
+                this.items = to;
             }
         },
         methods: {

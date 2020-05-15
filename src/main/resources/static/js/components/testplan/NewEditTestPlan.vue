@@ -17,7 +17,8 @@
                                         entity-name="Test Plan Description"></create-edit-entity-description>
         <create-edit-entity-text-field :name-for-update="testPlan !== null ? testPlan.testMethod : null" store-update-method="setTestMethod"
                                        entity-name="Test Plan Method"></create-edit-entity-text-field>
-        <create-edit-entity-status entity-name="Status" :status-for-update="testPlan !== null ? testPlan.status : null"></create-edit-entity-status>
+        <create-edit-entity-select-field entity-name="Status" :pre-selected-value-for-update="testPlan !== null ? testPlan.status : null"
+                                         store-update-method="setStatus" :items-for-update="statusValues"></create-edit-entity-select-field>
         <from-to-fields :from-date-for-update="testPlan !== null ? testPlan.initialDate.substring(0, 10) : null"
                         :to-date-for-update="testPlan !== null ? testPlan.endDate.substring(0, 10) : null"></from-to-fields>
 
@@ -29,20 +30,22 @@
     import FromToFields from "../common/FromToFields.vue";
     import CreateEditEntityTextField from "../common/CreateEditEntityTextField.vue";
     import CreateEditEntityDescription from "../common/CreateEditEntityDescription.vue";
-    import CreateEditEntityStatus from "../common/CreateEditEntityStatus.vue";
+    import CreateEditEntitySelectField from "../common/CreateEditEntitySelectField.vue";
     import constants from "../../constants";
 
     export default {
-        components: {FromToFields, CreateEditEntityTextField, CreateEditEntityDescription, CreateEditEntityStatus},
+        components: {FromToFields, CreateEditEntityTextField, CreateEditEntityDescription, CreateEditEntitySelectField},
         computed: {},
         mounted() {
             if (this.$attrs.id) {
                 this.getTestPlanForEdit()
             }
+            this.statusValues = constants.STATUS_VALUES;
         },
         watch: {},
         data() {
             return {
+                statusValues: null,
                 disableSave: true,
                 testPlan: null
             }

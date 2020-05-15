@@ -9,6 +9,7 @@ import subscripModalStore from './store/subscripModalStore.js'
 import pagerStore from './store/pagerStore.js'
 import projectsStore from "./store/projectsStore.js";
 import createEditEntityStore from "./store/createEditEntityStore.js";
+import checkListOrderStore from "./store/checkListOrderStore.js";
 
 import App from 'pages/App.vue'
 import Home from 'components/home/Home.vue'
@@ -21,6 +22,14 @@ import Project from "./components/projects/Project.vue";
 import Module from "./components/modules/Module.vue";
 import NewEditTestPlan from "./components/testplan/NewEditTestPlan.vue";
 import NewEditRequirement from "./components/requirement/NewEditRequirement.vue";
+import Requirement from "./components/requirement/Requirement.vue";
+import NewEditTestCase from "./components/testcase/NewEditTestCase.vue";
+import TestCase from "./components/testcase/TestCase.vue";
+import NewEditTask from "./components/task/NewEditTask.vue";
+import NewEditTestCheckList from "./components/checklist/NewEditTestCheckList.vue";
+import CheckList from "./components/checklist/CheckList.vue";
+import EditCheckListTestCase from "./components/checklist/EditCheckListTestCase.vue";
+import UserList from "./components/users/UserList.vue";
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
@@ -42,6 +51,17 @@ const routes = [
     { path: '/edit-test-plan/:parentId/:id', component: NewEditTestPlan, props: true },
     { path: '/new-requirement/:parentId', component: NewEditRequirement, props: true },
     { path: '/edit-requirement/:parentId/:id', component: NewEditRequirement, props: true },
+    { path: '/view-requirement/:id', component: Requirement, props: true },
+    { path: '/new-test-case/:parentId', component: NewEditTestCase, props: true },
+    { path: '/edit-test-case/:parentId/:id', component: NewEditTestCase, props: true },
+    { path: '/view-test-case/:id', component: TestCase, props: true },
+    { path: '/new-task/:parentId', component: NewEditTask, props: true },
+    { path: '/edit-task/:parentId/:id', component: NewEditTask, props: true },
+    { path: '/new-check-list/:parentId', component: NewEditTestCheckList, props: true },
+    { path: '/edit-check-list/:parentId/:id', component: NewEditTestCheckList, props: true },
+    { path: '/view-check-list/:id', component: CheckList, props: true },
+    { path: '/edit-check-list-test-case/:parentId/:id', component: EditCheckListTestCase, props: true },
+    { path: '/users', component: UserList, props: true },
 ];
 
 const router = new VueRouter({
@@ -55,6 +75,7 @@ const store = new Vuex.Store({
         pager: pagerStore,
         projects: projectsStore,
         createEditEntity: createEditEntityStore,
+        checkListOrder: checkListOrderStore,
     }
 });
 

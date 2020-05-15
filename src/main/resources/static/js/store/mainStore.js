@@ -6,6 +6,7 @@ export default {
     filter: "",
     editingMessage: null,
     channel: null,
+    users: null,
   },
   mutations: {
     setProfile(state, payload) {
@@ -23,6 +24,9 @@ export default {
     setFilter(state, payload) {
       state.filter = payload;
     },
+    setUsers(state, payload) {
+      state.users = payload;
+    },
   },
   getters: {
     getProfile: state => state.profile,
@@ -30,5 +34,6 @@ export default {
     getFilter: state => state.filter,
     getEditingMessage: state => state.editingMessage,
     getChannel: state => state.channel,
+    getAdminUsers: state => state.users,
   }
 };

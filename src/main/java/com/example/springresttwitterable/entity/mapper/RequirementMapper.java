@@ -1,7 +1,10 @@
 package com.example.springresttwitterable.entity.mapper;
 
 import com.example.springresttwitterable.entity.Requirement;
+import com.example.springresttwitterable.entity.TestCase;
 import com.example.springresttwitterable.entity.TestPlan;
+import com.example.springresttwitterable.entity.dto.module.FullModuleDTO;
+import com.example.springresttwitterable.entity.dto.requirement.FullRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.ListRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.NewRequirementDTO;
 import com.example.springresttwitterable.entity.dto.requirement.UpdateRequirementDTO;
@@ -20,7 +23,7 @@ import java.util.Set;
  * @author generatorr
  */
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {ModuleMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {ModuleMapper.class, TestCaseMapper.class, UserMapper.class})
 public interface RequirementMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -30,10 +33,14 @@ public interface RequirementMapper {
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "module", ignore = true)
     @Mapping(target = "testCases", ignore = true)
+    @Mapping(target = "users", ignore = true)
     Requirement fromNewRequirementDTOToEntity(NewRequirementDTO dto);
 
     @Mapping(target = "moduleId", source = "module.id")
     ListRequirementDTO fromEntityToListRequirementDTO(Requirement entity);
+
+    @Mapping(target = "moduleId", source = "module.id")
+    FullRequirementDTO fromEntityToFullModuleDTO(Requirement entity);
 
     Set<ListRequirementDTO> convertToSet(Set<Requirement> entities);
 

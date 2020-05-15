@@ -1,10 +1,7 @@
 package com.example.springresttwitterable.entity.mapper;
 
-import com.example.springresttwitterable.entity.Requirement;
 import com.example.springresttwitterable.entity.TestCase;
-import com.example.springresttwitterable.entity.dto.requirement.ListRequirementDTO;
-import com.example.springresttwitterable.entity.dto.requirement.NewRequirementDTO;
-import com.example.springresttwitterable.entity.dto.requirement.UpdateRequirementDTO;
+import com.example.springresttwitterable.entity.dto.testcase.FullTestCaseDTO;
 import com.example.springresttwitterable.entity.dto.testcase.ListTestCaseDTO;
 import com.example.springresttwitterable.entity.dto.testcase.NewTestCaseDTO;
 import com.example.springresttwitterable.entity.dto.testcase.UpdateTestCaseDTO;
@@ -20,7 +17,8 @@ import java.util.Set;
  * @author generatorr
  */
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {RequirementMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {RequirementMapper.class, TaskMapper.class,
+    UserMapper.class})
 public interface TestCaseMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -31,10 +29,14 @@ public interface TestCaseMapper {
     @Mapping(target = "requirement", ignore = true)
     @Mapping(target = "tasks", ignore = true)
     @Mapping(target = "checkLists", ignore = true)
-    TestCase fromNewTestCaseDTOToEntity(NewTestCaseDTO dto);
+    @Mapping(target = "users", ignore = true)
+    TestCase fromNewDTOToEntity(NewTestCaseDTO dto);
 
     @Mapping(target = "requirementId", source = "requirement.id")
     ListTestCaseDTO fromEntityToListTestCaseDTO(TestCase entity);
+
+    @Mapping(target = "requirementId", source = "requirement.id")
+    FullTestCaseDTO fromEntityToFullDTO(TestCase module);
 
     Set<ListTestCaseDTO> convertToSet(Set<TestCase> entities);
 
@@ -46,5 +48,5 @@ public interface TestCaseMapper {
         entity.setEndDate(dto.getEndDate());
         entity.setTestCase(dto.getTestCase());
         entity.setStatus(dto.getStatus());
-    };
+    }
 }

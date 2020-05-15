@@ -21,7 +21,7 @@ import java.util.Set;
  */
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR,
-    uses = {ProjectMapper.class, TestPlanMapper.class, RequirementMapper.class})
+    uses = {ProjectMapper.class, TestPlanMapper.class, RequirementMapper.class, CheckListMapper.class, UserMapper.class})
 public interface ModuleMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -32,6 +32,8 @@ public interface ModuleMapper {
     @Mapping(target = "project", ignore = true)
     @Mapping(target = "testPlans", ignore = true)
     @Mapping(target = "requirements", ignore = true)
+    @Mapping(target = "checkLists", ignore = true)
+    @Mapping(target = "users", ignore = true)
     Module fromNewModuleDTOToEntity(NewModuleDTO newModuleDTO);
 
     @Mapping(target = "projectId", source = "project.id")

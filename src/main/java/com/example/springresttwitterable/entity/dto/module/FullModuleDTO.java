@@ -1,5 +1,6 @@
 package com.example.springresttwitterable.entity.dto.module;
 
+import com.example.springresttwitterable.entity.dto.checklist.ListCheckListDTO;
 import com.example.springresttwitterable.entity.dto.requirement.ListRequirementDTO;
 import com.example.springresttwitterable.entity.dto.testplan.ListTestPlanDTO;
 import com.example.springresttwitterable.entity.dto.user.UserDTO;
@@ -34,4 +35,6 @@ public class FullModuleDTO implements Serializable {
     private Long projectId;
     private Set<ListTestPlanDTO> testPlans;
     private Set<ListRequirementDTO> requirements;
+    private Set<ListCheckListDTO> checkLists;
+    private Set<UserDTO> users;
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-row flex-between">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-9">
                 <h2>{{project.name}}</h2>
                 <p>{{project.description}}</p>
                 <p>Initial Date: {{project.initialDate}}</p>
@@ -55,7 +55,7 @@
                 </template>
             </v-simple-table>
         </div>
-        <employees-modal :users="users" :project="project" v-show="isModalVisible" @close="closeEmployeesModal"></employees-modal>
+        <employees-modal url="project" :users="users" :entity="project" v-show="isModalVisible" @close="closeEmployeesModal"></employees-modal>
     </div>
 </template>
 

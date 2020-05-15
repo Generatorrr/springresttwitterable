@@ -5,14 +5,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.envers.Audited;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created on 2020-05-12
@@ -31,6 +36,14 @@ public class TestPlan extends AuditableEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "module_id")
     private Module module;
+
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "account_test_plan",
+        joinColumns = { @JoinColumn(name = "test_plan_id") },
+        inverseJoinColumns = { @JoinColumn(name = "account_id") }
+    )
+    private Set<User> users = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,7 @@
 .flex-between {
   display: flex;
   justify-content: space-between;
+  word-break: break-all;
 }
 
 .flex-end {

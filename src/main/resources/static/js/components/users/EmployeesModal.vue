@@ -4,7 +4,7 @@
             <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
                 <header class="modal-header" id="modalTitle">
                     <slot name="header">
-                        <h3>{{project.name}} users</h3>
+                        <h3>{{entity.name}} users</h3>
                         <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
                     </slot>
                 </header>
@@ -30,7 +30,7 @@
 
     export default {
 
-        props: ['project', 'users'],
+        props: ['entity', 'users', 'url'],
         data() {
             return {
                 allUsers: null
@@ -45,17 +45,17 @@
             actionWithUser(user) {
                 const action = user.alreadyAssigned ? 'unassign' : 'assign';
                 return axios
-                    .put(`${location.origin}/project/${this.project.id}/${action}/${user.id}`)
+                    .put(`${location.origin}/${this.url}/${this.entity.id}/${action}/${user.id}`)
                     .then(response => {
                         if (user.alreadyAssigned) {
                             user.alreadyAssigned = false;
-                            const index = this.project.users.map(item => item.id).indexOf(user.id);
+                            const index = this.entity.users.map(item => item.id).indexOf(user.id);
                             if (index > -1) {
-                                this.project.users.splice(index, 1);
+                                this.entity.users.splice(index, 1);
                             }
                         } else {
                             user.alreadyAssigned = true;
-                            this.project.users.push(user);
+                            this.entity.users.push(user);
                         }
                     });
             }

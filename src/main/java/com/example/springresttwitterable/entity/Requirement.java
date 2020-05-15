@@ -9,6 +9,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,6 +36,14 @@ public class Requirement extends AuditableEntity implements Serializable {
 
     @OneToMany(mappedBy = "requirement", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<TestCase> testCases = new HashSet<>();
+
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "account_requirement",
+        joinColumns = { @JoinColumn(name = "requirement_id") },
+        inverseJoinColumns = { @JoinColumn(name = "account_id") }
+    )
+    private Set<User> users = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -11,10 +11,6 @@ import com.example.springresttwitterable.entity.dto.project.UpdateProjectDTO;
 import com.example.springresttwitterable.entity.mapper.ProjectMapper;
 import com.example.springresttwitterable.repository.ProjectRepository;
 import com.example.springresttwitterable.service.ProjectService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,7 +37,6 @@ import javax.validation.Valid;
  */
 
 @RestController
-@Api(value = "Project API", description = "Operations with projects")
 @RequestMapping("/project")
 public class ProjectController {
 
@@ -57,12 +52,6 @@ public class ProjectController {
 
     @GetMapping
     @ResponseBody
-    @ApiOperation(value = "Get projects", response = PageableProjectDTO.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully return projects"),
-        @ApiResponse(code = 403, message = "Forbidden")
-    }
-    )
     public PageableProjectDTO getProjects(
         @RequestParam(required = false, defaultValue = "") String filter,
         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
@@ -85,12 +74,6 @@ public class ProjectController {
 
     @GetMapping("{id}")
     @ResponseBody
-    @ApiOperation(value = "Get ListProjectDTO by id", response = ListProjectDTO.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully return project by id"),
-        @ApiResponse(code = 403, message = "Forbidden")
-    }
-    )
     public ListProjectDTO getProject(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
 
         return projectService.getById(id);
@@ -98,19 +81,12 @@ public class ProjectController {
 
     @GetMapping("{id}/full")
     @ResponseBody
-    @ApiOperation(value = "Get FullProjectDTO by id", response = FullProjectDTO.class)
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Successfully return project by id"),
-        @ApiResponse(code = 403, message = "Forbidden")
-    }
-    )
     public FullProjectDTO getFullProject(@PathVariable Long id, @AuthenticationPrincipal User currentUser) {
 
         return projectService.getByFullProjectDTOById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Create new project", response = ResponseEntity.class)
     public ResponseEntity createProject(@AuthenticationPrincipal User currentUser, @RequestBody @Valid NewProjectDTO newProjectDTO) {
 
         Project project = projectMapper.fromNewProjectDTOToEntity(newProjectDTO);
@@ -121,7 +97,6 @@ public class ProjectController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Update project", response = ResponseEntity.class)
     public ResponseEntity updateProject(@AuthenticationPrincipal User currentUser, @RequestBody @Valid UpdateProjectDTO updateProjectDTO) {
 
         projectService.updateProject(updateProjectDTO);
@@ -129,7 +104,6 @@ public class ProjectController {
     }
 
     @PutMapping("{id}/assign/{userId}")
-    @ApiOperation(value = "Assign user to project", response = ResponseEntity.class)
     public ResponseEntity assignToProject(@AuthenticationPrincipal User currentUser, @PathVariable Long id, @PathVariable String userId) {
 
         projectService.assignToProject(id, userId);
@@ -139,7 +113,6 @@ public class ProjectController {
 
 
     @PutMapping("{id}/unassign/{userId}")
-    @ApiOperation(value = "Detach user from project", response = ResponseEntity.class)
     public ResponseEntity detachFromProject(@AuthenticationPrincipal User currentUser, @PathVariable Long id, @PathVariable String userId) {
 
         projectService.detachFromProject(id, userId);

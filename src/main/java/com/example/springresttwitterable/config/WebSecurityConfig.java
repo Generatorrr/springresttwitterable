@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 newUser.setGender((String) map.get("gender"));
                 newUser.setLocale((String) map.get("locale"));
                 newUser.setUserpic((String) map.get("picture"));
-                newUser.setRoles(Collections.singleton(Role.USER));
+                newUser.setRoles(Collections.singleton(Role.ADMIN));
 
                 return newUser;
             });

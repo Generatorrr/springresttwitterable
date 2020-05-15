@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <a class="btn btn-primary color-white" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
       Message Editor
     </a>
     <div class="collapse" v-bind:class="{ show: editingMessage && editingMessage.text }" id="collapseExample">

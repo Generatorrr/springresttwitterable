@@ -4,13 +4,15 @@
             <div class="form-group">
                 <label class="col-sm-2 col-form-label"> Name: </label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="text" name="name" :placeholder="profile.name" v-model="updatedName" />
+                    <input class="form-control" type="text" name="name" :placeholder="profile != null ? profile.name : 'Enter your name'"
+                           v-model="updatedName" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-form-label"> Email: </label>
                 <div class="col-sm-6">
-                    <input class="form-control" type="email" name="email" :placeholder="profile.email" v-model="updatedEmail" />
+                    <input class="form-control" type="email" name="email" :placeholder="profile != null ? profile.email : 'Enter your email'"
+                           v-model="updatedEmail" />
                 </div>
             </div>
             <!--<input type="hidden" name="_csrf" value="${_csrf.token}" />-->

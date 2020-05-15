@@ -29,10 +29,11 @@ public interface TaskMapper {
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "testCase", ignore = true)
-    Task fromNewTaskDTOToEntity(NewTaskDTO dto);
+    @Mapping(target = "users", ignore = true)
+    Task fromNewDTOToEntity(NewTaskDTO dto);
 
     @Mapping(target = "testCaseId", source = "testCase.id")
-    ListTaskDTO fromEntityToListTaskDTO(Task entity);
+    ListTaskDTO fromEntityToListDTO(Task entity);
 
     Set<ListTaskDTO> convertToSet(Set<Task> entities);
 
