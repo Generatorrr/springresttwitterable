@@ -16,7 +16,7 @@
                 <li v-if="profile" class="nav-item">
                     <router-link class="nav-link" to="/user/profile">Profile</router-link>
                 </li>
-                <li v-if="profile" class="nav-item">
+                <li v-if="profile && profile.roles.indexOf('ADMIN') !== -1" class="nav-item">
                     <router-link class="nav-link" to="/users">User List</router-link>
                 </li>
                 <li v-if="profile" class="nav-item">
