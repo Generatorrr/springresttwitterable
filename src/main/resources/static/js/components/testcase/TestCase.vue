@@ -31,9 +31,9 @@
                         <th class="text-left">Name</th>
                         <th class="text-left">Initial Date</th>
                         <th class="text-left">End Date</th>
-                        <th class="text-left">Status</th>
                         <th class="text-left">Type</th>
                         <th class="text-left">Severity</th>
+                        <th class="text-left">Status</th>
                     </tr>
                     </thead>
                     <tbody>
