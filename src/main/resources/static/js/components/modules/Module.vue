@@ -21,7 +21,7 @@
         </div>
         <div class="form-row flex-column margin-bottom-30">
             <div class="flex-start">
-                <h5>Test Plans</h5>
+                <h5>Test Plan</h5>
                 <button class="btn btn-primary ml-2" type="button">
                     <router-link class="color-white" :to="`/new-test-plan/${module.id}`"><i class="fas fa-plus"></i></router-link>
                 </button>
