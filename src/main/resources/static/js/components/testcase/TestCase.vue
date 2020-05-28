@@ -1,11 +1,13 @@
 <template>
     <div>
         <div class="form-row flex-between">
-            <div class="form-group col-md-9">
+            <div class="form-group col-md-9 info-block">
                 <h2>{{testCase.name}}</h2>
-                <p>{{testCase.description}}</p>
-                <p>Initial Date: {{testCase.initialDate}}</p>
-                <p>End Date: {{testCase.endDate}}</p>
+                <label>
+                    <textarea readonly>{{testCase.description}}</textarea>
+                </label>
+                <p>Initial Date: {{toDatetimeString(testCase.initialDate)}}</p>
+                <p>End Date: {{toDatetimeString(testCase.endDate)}}</p>
             </div>
             <div class="form-group col-md-3">
                 <div class="flex-start">
@@ -39,8 +41,8 @@
                     <tbody>
                     <tr v-for="item in testCase.tasks" :key="item.name" class="table-item__cursor-pointer">
                         <td>{{ item.name }}</td>
-                        <td>{{ item.initialDate }}</td>
-                        <td>{{ item.endDate }}</td>
+                        <td>{{ toDatetimeString(item.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.endDate) }}</td>
                         <td>{{ item.taskType }}</td>
                         <td>{{ item.severity }}</td>
                         <td>{{ item.status }}</td>
@@ -68,6 +70,7 @@
 <script>
     import axios from 'axios'
     import EmployeesModal from './../users/EmployeesModal.vue'
+    import constants from "../../constants";
 
     export default {
 
@@ -102,7 +105,8 @@
                     initialDate: null,
                     endDate: null,
                 },
-                users: null
+                users: null,
+                toDatetimeString: constants.normaliseDateString
             }
         },
         methods: {

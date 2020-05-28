@@ -21,7 +21,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR, uses = {UserMapper.class, ModuleMapper.class})
 public interface ProjectMapper {
 
-    @Mapping(target = "moduleCount", ignore = true)
     ListProjectDTO fromEntityToListProjectDTO(Project project);
 
     @Mapping(target = "id", ignore = true)

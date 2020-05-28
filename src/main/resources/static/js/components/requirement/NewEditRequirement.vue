@@ -12,10 +12,10 @@
             </v-col>
         </v-row>
         <create-edit-entity-text-field :name-for-update="requirement !== null ? requirement.name : null" store-update-method="setName"
-                                       entity-name="Requirement Name"></create-edit-entity-text-field>
+                                       entity-name="Name"></create-edit-entity-text-field>
         <create-edit-entity-description :description-for-update="requirement !== null ? requirement.description : null"
-                                        entity-name="Requirement Description"></create-edit-entity-description>
-        <create-edit-entity-select-field entity-name="Requirement Status"
+                                        entity-name="Description"></create-edit-entity-description>
+        <create-edit-entity-select-field entity-name="Status"
                                          :pre-selected-value-for-update="requirement !== null ? requirement.status : null"
                                          store-update-method="setStatus" :items-for-update="statusValues"></create-edit-entity-select-field>
         <from-to-fields :from-date-for-update="requirement !== null ? requirement.initialDate.substring(0, 10) : null"

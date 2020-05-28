@@ -12,11 +12,11 @@
             </v-col>
         </v-row>
         <create-edit-entity-text-field :name-for-update="testPlan !== null ? testPlan.name : null" store-update-method="setName"
-                                 entity-name="Test Plan Name"></create-edit-entity-text-field>
+                                 entity-name="Name"></create-edit-entity-text-field>
         <create-edit-entity-description :description-for-update="testPlan !== null ? testPlan.description : null"
-                                        entity-name="Test Plan Description"></create-edit-entity-description>
+                                        entity-name="Description"></create-edit-entity-description>
         <create-edit-entity-text-field :name-for-update="testPlan !== null ? testPlan.testMethod : null" store-update-method="setTestMethod"
-                                       entity-name="Test Plan Method"></create-edit-entity-text-field>
+                                       entity-name="Method"></create-edit-entity-text-field>
         <create-edit-entity-select-field entity-name="Status" :pre-selected-value-for-update="testPlan !== null ? testPlan.status : null"
                                          store-update-method="setStatus" :items-for-update="statusValues"></create-edit-entity-select-field>
         <from-to-fields :from-date-for-update="testPlan !== null ? testPlan.initialDate.substring(0, 10) : null"

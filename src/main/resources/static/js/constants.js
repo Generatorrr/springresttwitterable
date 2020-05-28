@@ -94,4 +94,11 @@ export default {
             testCaseOrder,
         }
     },
+    normaliseDateString: str => {
+      const dateAndTime = new Date(str).toISOString();
+      const delimiter = dateAndTime.indexOf('T');
+      const date = dateAndTime.substr(0, delimiter);
+      const time = dateAndTime.substr(delimiter + 1, 5);
+      return `${date} ${time}`;
+    },
 }

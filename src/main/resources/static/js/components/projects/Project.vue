@@ -1,11 +1,13 @@
 <template>
     <div>
         <div class="form-row flex-between">
-            <div class="form-group col-md-9">
+            <div class="form-group col-md-9 info-block">
                 <h2>{{project.name}}</h2>
-                <p>{{project.description}}</p>
-                <p>Initial Date: {{project.initialDate}}</p>
-                <p>End Date: {{project.endDate}}</p>
+                <label>
+                    <textarea readonly>{{project.description}}</textarea>
+                </label>
+                <p>Initial Date: {{toDatetimeString(project.initialDate)}}</p>
+                <p>End Date: {{toDatetimeString(project.endDate)}}</p>
             </div>
             <div class="form-group col-md-3">
                 <div class="flex-start">
@@ -28,7 +30,7 @@
                 <template v-slot:default>
                     <thead>
                     <tr>
-                        <th class="text-left">Module</th>
+                        <th class="text-left">Name</th>
                         <th class="text-left">Initial Date</th>
                         <th class="text-left">End Date</th>
                     </tr>
@@ -36,8 +38,8 @@
                     <tbody>
                     <tr v-for="item in project.modules" :key="item.name" class="table-item__cursor-pointer">
                         <td v-on:click="viewModule(item.id)">{{ item.name }}</td>
-                        <td>{{ item.initialDate }}</td>
-                        <td>{{ item.endDate }}</td>
+                        <td>{{ toDatetimeString(item.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.endDate) }}</td>
                         <td>
                             <div class="flex-end">
                                 <button class="btn btn-primary ml-2" type="button">
@@ -62,6 +64,7 @@
 <script>
     import axios from 'axios'
     import EmployeesModal from './../users/EmployeesModal.vue'
+    import constants from "../../constants";
 
     export default {
 
@@ -96,7 +99,8 @@
                     initialDate: null,
                     endDate: null,
                 },
-                users: null
+                users: null,
+                toDatetimeString: constants.normaliseDateString
             }
         },
         methods: {

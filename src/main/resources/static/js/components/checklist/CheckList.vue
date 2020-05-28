@@ -4,8 +4,8 @@
             <div class="form-group col-md-9">
                 <h2>{{checkList.name}}</h2>
                 <p>{{checkList.description}}</p>
-                <p>Initial Date: {{checkList.initialDate}}</p>
-                <p>End Date: {{checkList.endDate}}</p>
+                <p>Initial Date: {{ toDatetimeString(checkList.initialDate) }}</p>
+                <p>End Date: {{ toDatetimeString(checkList.endDate) }}</p>
             </div>
             <div class="form-group col-md-3">
                 <div class="flex-start">
@@ -42,8 +42,8 @@
                         <td>{{ item.testCaseOrder }}</td>
                         <td>{{ item.status }}</td>
                         <td>{{ item.testCase.name }}</td>
-                        <td>{{ item.testCase.initialDate }}</td>
-                        <td>{{ item.testCase.endDate }}</td>
+                        <td>{{ toDatetimeString(item.testCase.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.testCase.endDate) }}</td>
                         <td>
                             <div class="flex-end">
                                 <button class="btn btn-primary ml-2" type="button">
@@ -100,6 +100,7 @@
                 },
                 users: null,
                 availableTestCases: null,
+                toDatetimeString: constants.normaliseDateString
             }
         },
         methods: {

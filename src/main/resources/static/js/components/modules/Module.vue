@@ -1,11 +1,13 @@
 <template>
     <div>
         <div class="form-row flex-between">
-            <div class="form-group col-md-9">
+            <div class="form-group col-md-9 info-block">
                 <h2>{{module.name}}</h2>
-                <p>{{module.description}}</p>
-                <p>Initial Date: {{module.initialDate}}</p>
-                <p>End Date: {{module.endDate}}</p>
+                <label>
+                    <textarea>{{module.description}}</textarea>
+                </label>
+                <p>Initial Date: {{toDatetimeString(module.initialDate)}}</p>
+                <p>End Date: {{toDatetimeString(module.endDate)}}</p>
             </div>
             <div class="form-group col-md-3">
                 <div class="flex-start">
@@ -39,8 +41,8 @@
                     <tr v-for="item in module.testPlans" :key="item.name" class="table-item__cursor-pointer">
                         <td>{{ item.name }}</td>
                         <td>{{ item.testMethod }}</td>
-                        <td>{{ item.initialDate }}</td>
-                        <td>{{ item.endDate }}</td>
+                        <td>{{ toDatetimeString(item.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.endDate) }}</td>
                         <td>{{ item.status }}</td>
                         <td>
                             <div class="flex-end">
@@ -79,8 +81,8 @@
                     <tbody>
                     <tr v-for="item in module.requirements" :key="item.name" class="table-item__cursor-pointer">
                         <td v-on:click="viewRequirement(item.id)">{{ item.name }}</td>
-                        <td>{{ item.initialDate }}</td>
-                        <td>{{ item.endDate }}</td>
+                        <td>{{ toDatetimeString(item.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.endDate) }}</td>
                         <td>{{ item.status }}</td>
                         <td>
                             <div class="flex-end">
@@ -119,8 +121,8 @@
                     <tbody>
                     <tr v-for="item in module.checkLists" :key="item.name" class="table-item__cursor-pointer">
                         <td v-on:click="viewCheckList(item.id)">{{ item.name }}</td>
-                        <td>{{ item.initialDate }}</td>
-                        <td>{{ item.endDate }}</td>
+                        <td>{{ toDatetimeString(item.initialDate) }}</td>
+                        <td>{{ toDatetimeString(item.endDate) }}</td>
                         <td>{{ item.status }}</td>
                         <td>
                             <div class="flex-end">
@@ -146,6 +148,7 @@
 <script>
     import axios from 'axios'
     import EmployeesModal from './../users/EmployeesModal.vue'
+    import constants from "../../constants"
 
     export default {
 
@@ -180,7 +183,8 @@
                     initialDate: null,
                     endDate: null,
                 },
-                users: null
+                users: null,
+                toDatetimeString: constants.normaliseDateString
             }
         },
         methods: {

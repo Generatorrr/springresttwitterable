@@ -22,7 +22,7 @@
             <template v-slot:default>
                 <thead>
                 <tr>
-                    <th class="text-left">Project</th>
+                    <th class="text-left">Name</th>
                     <th class="text-left">Initial Date</th>
                     <th class="text-left">End Date</th>
                     <th class="text-left">Modules count</th>
@@ -31,11 +31,11 @@
                 <tbody>
                 <tr v-for="item in projects" :key="item.name" class="table-item__cursor-pointer">
                     <td v-on:click="viewProject(item.id)">{{ item.name }}</td>
-                    <td>{{ item.initialDate }}</td>
-                    <td>{{ item.endDate }}</td>
+                    <td>{{ toDatetimeString(item.initialDate) }}</td>
+                    <td>{{ toDatetimeString(item.endDate) }}</td>
                     <td>
                         <div class="flex-between">
-                            <p>{{ item.moduleCount }}</p>
+                            <p>{{ item.modules.length }}</p>
                             <router-link class="edit-link-pencil"
                                          :to="{ path: `/edit-project/${item.id}` }"
                                          tag="img" src="/static/assets/edit.svg"></router-link>
@@ -50,6 +50,7 @@
 
 <script>
     import axios from 'axios'
+    import constants from "../../constants";
 
     export default {
         components: {  },
@@ -69,7 +70,8 @@
         },
         data() {
             return {
-                filter: ""
+                filter: "",
+                toDatetimeString: constants.normaliseDateString
             }
         },
         methods: {

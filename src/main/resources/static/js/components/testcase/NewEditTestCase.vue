@@ -77,7 +77,7 @@
                     status: needUpdateAction ? this.$store.getters.getStatus : 'TO_DO',
                     name: this.$store.getters.getName,
                     description: this.$store.getters.getDescription,
-                    checkList: this.$store.getters.getTestCase,
+                    testCase: this.$store.getters.getTestCase,
                     initialDate: this.$store.getters.getInitialDate,
                     endDate: this.$store.getters.getEndDate,
                     requirementId: this.$attrs.parentId

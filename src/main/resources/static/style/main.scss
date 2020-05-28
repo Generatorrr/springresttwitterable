@@ -31,3 +31,8 @@
 .color-white {
   color: white!important;
 }
+
+.info-block textarea, .info-block label {
+  width: 100%;
+  max-height: 100px;
+}

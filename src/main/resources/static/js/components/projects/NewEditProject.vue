@@ -3,7 +3,7 @@
         <v-row class="ma-1">
             <v-col cols="12" md="6">
                 <div class="flex-between">
-                    <h2>{{ project !== null ? 'Update' : 'Create new' }} project</h2>
+                    <h2>{{ project !== null ? 'Update' : 'Create new' }} Project</h2>
                     <button v-bind:disabled="disableSave"
                             v-on:click="saveProject()"
                             class="btn btn-primary ml-2" type="button">Save
@@ -12,9 +12,9 @@
             </v-col>
         </v-row>
         <create-edit-entity-text-field :name-for-update="project !== null ? project.name : null" store-update-method="setName"
-                                 entity-name="Project Name"></create-edit-entity-text-field>
+                                 entity-name="Name"></create-edit-entity-text-field>
         <create-edit-entity-description :description-for-update="project !== null ? project.description : null"
-                                        entity-name="Project Description"></create-edit-entity-description>
+                                        entity-name="Description"></create-edit-entity-description>
         <from-to-fields :from-date-for-update="project !== null ? project.initialDate.substring(0, 10) : null"
                         :to-date-for-update="project !== null ? project.endDate.substring(0, 10) : null" ></from-to-fields>
 
