@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c529a221-f830-4752-b52b-34b036e001a5.SCHEMA:magic_network.public</OriginalElement>
+  <nodes>
+    <node x="0.0" y="2370.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.flyway_schema_history</node>
+    <node x="2123.749259902001" y="1852.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.task</node>
+    <node x="805.9759085340952" y="854.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_project</node>
+    <node x="1537.642575200762" y="1112.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_plan</node>
+    <node x="1774.642575200762" y="484.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_subscriptions_aud</node>
+    <node x="1314.642575200762" y="1232.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_module</node>
+    <node x="359.9759085340952" y="508.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_role</node>
+    <node x="1130.3509085340952" y="484.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_role_aud</node>
+    <node x="401.94582822920916" y="1888.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case_check_list</node>
+    <node x="1142.8331036477475" y="0.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account</node>
+    <node x="705.0" y="2370.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.revinfo</node>
+    <node x="465.9759085340952" y="1124.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.requirement</node>
+    <node x="1036.465827888934" y="2246.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_task</node>
+    <node x="2384.249259902001" y="250.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.spring_session_attributes</node>
+    <node x="321.29032258064535" y="1602.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_requirement</node>
+    <node x="2379.749259902001" y="0.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.spring_session</node>
+    <node x="581.9759085340952" y="460.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.message</node>
+    <node x="255.0" y="2370.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_aud</node>
+    <node x="53.0" y="508.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_subscriptions</node>
+    <node x="475.0" y="2370.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.message_aud</node>
+    <node x="893.4550752007619" y="1124.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.check_list</node>
+    <node x="1339.894489247312" y="1602.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_check_list</node>
+    <node x="1234.3934088743704" y="746.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module</node>
+    <node x="1830.4778225806454" y="1482.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case</node>
+    <node x="1901.2278225806454" y="1984.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_case</node>
+    <node x="1576.894489247312" y="1602.5">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_plan</node>
+    <node x="883.3509085340952" y="400.0">c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.project</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.project" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-75.66666666666674" y="-148.0" />
+      <point x="921.1842418674285" y="350.0" />
+      <point x="1219.0427810671024" y="350.0" />
+      <point x="-11.290322580645125" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_role" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-39.5" />
+      <point x="460.4759085340952" y="290.0" />
+      <point x="1185.1718133251668" y="290.0" />
+      <point x="-45.161290322580726" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_task" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-50.25" y="-39.5" />
+      <point x="1086.715827888934" y="2221.0" />
+      <point x="42.5" y="2221.0" />
+      <point x="42.5" y="220.0" />
+      <point x="1145.6556842929087" y="220.0" />
+      <point x="-84.67741935483878" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case_check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.check_list">
+      <point x="26.375" y="-136.0" />
+      <point x="533.8208282292092" y="1822.0" />
+      <point x="740.7684088743705" y="1822.0" />
+      <point x="740.7684088743705" y="1462.0" />
+      <point x="946.2050752007619" y="1462.0" />
+      <point x="-52.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_case" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="50.25" y="-39.5" />
+      <point x="2051.9778225806454" y="1832.0" />
+      <point x="2114.0809088743704" y="1832.0" />
+      <point x="2114.0809088743704" y="270.0" />
+      <point x="1303.7202004219412" y="270.0" />
+      <point x="73.38709677419365" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="70.33333333333326" y="-160.0" />
+      <point x="2006.3111559139786" y="1462.0" />
+      <point x="2058.758328229209" y="1462.0" />
+      <point x="2058.758328229209" y="280.0" />
+      <point x="1298.0750391316185" y="280.0" />
+      <point x="67.74193548387098" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module">
+      <point x="70.33333333333326" y="-148.0" />
+      <point x="1069.2884085340952" y="1092.0" />
+      <point x="1313.5184088743704" y="1092.0" />
+      <point x="-26.375" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-70.33333333333326" y="-148.0" />
+      <point x="928.6217418674287" y="1072.0" />
+      <point x="777.4759085340952" y="1072.0" />
+      <point x="777.4759085340952" y="320.0" />
+      <point x="1202.1072971961346" y="320.0" />
+      <point x="-28.225806451612925" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_module" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module">
+      <point x="-50.25" y="-39.5" />
+      <point x="1364.892575200762" y="1092.0" />
+      <point x="1366.2684088743704" y="1092.0" />
+      <point x="26.375" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.project">
+      <point x="-70.33333333333326" y="-148.0" />
+      <point x="1269.5600755410373" y="721.0" />
+      <point x="1053.6009085340952" y="721.0" />
+      <point x="56.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_subscriptions_aud" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-54.25" y="-64.0" />
+      <point x="1828.892575200762" y="310.0" />
+      <point x="1281.1395552606507" y="310.0" />
+      <point x="50.806451612903174" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_project" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.project">
+      <point x="50.25" y="-39.5" />
+      <point x="956.7259085340952" y="721.0" />
+      <point x="940.1009085340952" y="721.0" />
+      <point x="-56.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_case" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case">
+      <point x="-50.25" y="-39.5" />
+      <point x="1951.4778225806454" y="1832.0" />
+      <point x="1935.9778225806454" y="1832.0" />
+      <point x="0.0" y="160.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case_check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-79.125" y="-136.0" />
+      <point x="428.32082822920916" y="1832.0" />
+      <point x="280.5000000000002" y="1832.0" />
+      <point x="280.5000000000002" y="250.0" />
+      <point x="1162.5911681638765" y="250.0" />
+      <point x="-67.74193548387098" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.spring_session_attributes" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.spring_session">
+      <point x="0.0" y="-52.0" />
+      <point x="0.0" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.requirement">
+      <point x="-70.33333333333326" y="-160.0" />
+      <point x="1865.644489247312" y="1452.0" />
+      <point x="624.2259085340952" y="1452.0" />
+      <point x="52.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="70.33333333333326" y="-148.0" />
+      <point x="1410.2267422077039" y="721.0" />
+      <point x="1400.5708282292094" y="721.0" />
+      <point x="1400.5708282292094" y="370.0" />
+      <point x="1247.2685875187153" y="370.0" />
+      <point x="16.9354838709678" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_subscriptions" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-54.25" y="-39.5" />
+      <point x="107.25" y="230.0" />
+      <point x="1151.3008455832314" y="230.0" />
+      <point x="-79.0322580645161" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="50.25" y="-39.5" />
+      <point x="1490.644489247312" y="1462.0" />
+      <point x="1526.142575200762" y="1462.0" />
+      <point x="1526.142575200762" y="350.0" />
+      <point x="1258.5589100993604" y="350.0" />
+      <point x="28.225806451612925" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_module" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="50.25" y="-39.5" />
+      <point x="1465.392575200762" y="1092.0" />
+      <point x="1459.955075200762" y="1092.0" />
+      <point x="1459.955075200762" y="360.0" />
+      <point x="1252.9137488090378" y="360.0" />
+      <point x="22.58064516129025" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case_check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case">
+      <point x="79.125" y="-136.0" />
+      <point x="586.5708282292092" y="1832.0" />
+      <point x="1865.644489247312" y="1832.0" />
+      <point x="-70.33333333333326" y="160.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_project" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-50.25" y="-39.5" />
+      <point x="856.2259085340952" y="721.0" />
+      <point x="872.8509085340952" y="721.0" />
+      <point x="872.8509085340952" y="340.0" />
+      <point x="1213.3976197767797" y="340.0" />
+      <point x="-16.9354838709678" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_plan" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-160.0" />
+      <point x="1645.642575200762" y="1092.0" />
+      <point x="1676.142575200762" y="1092.0" />
+      <point x="1676.142575200762" y="340.0" />
+      <point x="1264.204071389683" y="340.0" />
+      <point x="33.870967741935374" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_plan" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="50.25" y="-39.5" />
+      <point x="1727.644489247312" y="1462.0" />
+      <point x="1764.142575200762" y="1462.0" />
+      <point x="1764.142575200762" y="320.0" />
+      <point x="1275.494393970328" y="320.0" />
+      <point x="45.1612903225805" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.task" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_case">
+      <point x="-70.33333333333348" y="-172.0" />
+      <point x="2158.9159265686676" y="1822.0" />
+      <point x="2006.3111559139786" y="1822.0" />
+      <point x="70.33333333333326" y="160.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_role_aud" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-63.5" />
+      <point x="1230.8509085340952" y="380.0" />
+      <point x="1235.97826493807" y="380.0" />
+      <point x="5.645161290322449" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_requirement" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.requirement">
+      <point x="50.25" y="-39.5" />
+      <point x="472.04032258064535" y="1462.0" />
+      <point x="518.7259085340952" y="1462.0" />
+      <point x="-52.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.requirement" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-148.0" />
+      <point x="571.4759085340952" y="300.0" />
+      <point x="1190.8169746154895" y="300.0" />
+      <point x="-39.51612903225805" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.message" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-88.0" />
+      <point x="674.4759085340952" y="310.0" />
+      <point x="1196.462135905812" y="310.0" />
+      <point x="-33.8709677419356" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_test_plan" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_plan">
+      <point x="-50.25" y="-39.5" />
+      <point x="1627.144489247312" y="1462.0" />
+      <point x="1645.642575200762" y="1462.0" />
+      <point x="0.0" y="160.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_task" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.task">
+      <point x="50.25" y="-39.5" />
+      <point x="1187.215827888934" y="2221.0" />
+      <point x="2229.249259902001" y="2221.0" />
+      <point x="0.0" y="172.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_check_list" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.check_list">
+      <point x="-50.25" y="-39.5" />
+      <point x="1390.144489247312" y="1462.0" />
+      <point x="1051.705075200762" y="1462.0" />
+      <point x="52.75" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account_requirement" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="-50.25" y="-39.5" />
+      <point x="371.54032258064535" y="1462.0" />
+      <point x="297.1451612903227" y="1462.0" />
+      <point x="297.1451612903227" y="270.0" />
+      <point x="1173.8814907445217" y="270.0" />
+      <point x="-56.45161290322585" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.task" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.account">
+      <point x="0.0" y="-172.0" />
+      <point x="2229.249259902001" y="1832.0" />
+      <point x="2257.394489247312" y="1832.0" />
+      <point x="2257.394489247312" y="260.0" />
+      <point x="1309.3653617122636" y="260.0" />
+      <point x="79.0322580645161" y="100.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.requirement" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module">
+      <point x="70.33333333333337" y="-148.0" />
+      <point x="641.8092418674286" y="1082.0" />
+      <point x="1260.7684088743704" y="1082.0" />
+      <point x="-79.125" y="148.0" />
+    </edge>
+    <edge source="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.test_plan" target="c529a221-f830-4752-b52b-34b036e001a5.TABLE:magic_network.public.module">
+      <point x="-72.0" y="-160.0" />
+      <point x="1573.642575200762" y="1082.0" />
+      <point x="1419.0184088743704" y="1082.0" />
+      <point x="79.125" y="148.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5952887537993921" x="1344.8047949825861" y="1069.5833220903978" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
